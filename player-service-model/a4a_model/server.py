@@ -158,7 +158,7 @@ class LLMFeedbackOutput(BaseModel):
     user_prompt: str
 
 @app.route('/llm/generate', methods=['POST'])
-@validate
+@validate()
 def generate_description(body: LLMInput) -> LLMOutput:
     data = request.json
     # Implement logic to generate a description based on the provided data
@@ -167,6 +167,7 @@ def generate_description(body: LLMInput) -> LLMOutput:
 
 
 @app.route('/llm/feedback', methods=['POST'])
+@validate()
 def description_feedback(body: LLMFeedbackInput) -> LLMFeedbackOutput:
     data = request.json
     # Implement logic to process feedback for a description
@@ -175,4 +176,4 @@ def description_feedback(body: LLMFeedbackInput) -> LLMFeedbackOutput:
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", debug=True)
+    app.run(host="0.0.0.0", port=8657, debug=True)
