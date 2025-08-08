@@ -14,5 +14,5 @@ WORKDIR /usr/local/a4a_model
 RUN poetry config virtualenvs.create false
 RUN poetry install
 WORKDIR /usr/local/a4a_model/a4a_model
-EXPOSE 5000
+EXPOSE 8657
 ENTRYPOINT ["python", "server.py"]
