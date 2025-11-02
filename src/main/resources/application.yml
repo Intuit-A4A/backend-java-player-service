@@ -17,9 +17,17 @@ spring:
       enabled: true
 
 server:
-  port: 8080
+  port: 8181
   include-debug-info: true
   error:
     include-message: always
 
 
+# JWT Configuration
+security:
+  jwt:
+    secret: DRQeqrJbHTooQiTSaBK9E0l22KwOQF/2pFEVo38ilHQ= # Replace with a strong secret key
+    expiration-ms: 3600000  # 1 hour in milliseconds
+
+# create secret key using openssl rand -base64 32
+# fci@MacBook-Air backend-java-player-service % openssl rand -base64 32

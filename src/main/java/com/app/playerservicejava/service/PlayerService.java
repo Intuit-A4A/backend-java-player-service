@@ -6,8 +6,14 @@ import com.app.playerservicejava.repository.PlayerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.JpaSort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -36,6 +42,31 @@ public class PlayerService {
             return Optional.empty();
         }
         return player;
+    }
+
+    public Page<Player> getPlayers(int page, int size, String sortBy, String direction) {
+
+        //input guardrails
+        if (page < 0) page = 0;
+        if (size <= 0) size = 10;
+        if (size > 50) size = 50;
+
+        //whitelist sort fields - based on Player entity fields
+        List<String> validSortFields = List.of("playerId", "firstName", "lastName", "weight", "height", "birthYear");
+        if(validSortFields.contains(sortBy)) {
+            sortBy = "playerId";
+        }
+
+        Sort sort = "DESC".equalsIgnoreCase(direction)
+                ? Sort.by(sortBy).descending()
+                : Sort.by(sortBy).ascending();
+
+
+        //Build pageable request object
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        //fetch paginated result
+        return playerRepository.findAll(pageable);
     }
 
 }

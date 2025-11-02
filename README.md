@@ -39,6 +39,7 @@ Player Service is a backend application that serves baseball player data. In add
 
    ```shell
    mvn spring-boot:run
+   ./mvnw spring-boot:run
    ```
 
 2. Verify the Player service is running
@@ -89,3 +90,122 @@ Having trouble with docker? Try using podman as an alternative. Instructions [he
 
 2. Open your browser and visit `http://localhost:8080/v1/chat/list-models`
    - If the application is running successfully, you will see a json response that include information about tinyllama
+
+
+
+
+
+## JWT Authentication Request Flow (Step-by-Step)
+### 1️⃣ User Logs In
+
+User sends credentials:
+
+```shell
+POST /v1/auth/login
+{
+"username": "admin",
+"password": "admin123"
+}
+```
+
+### 2️⃣ Spring Security Authenticates
+
+AuthController → AuthenticationManager → UserDetailsService
+
+Flow:
+
+* Spring extracts username & password from request
+* Calls UserDetailsService.loadUserByUsername()
+* Compares passwords using PasswordEncoder (BCrypt)
+* If valid → authentication succeeds
+* If invalid → throws 401 Unauthorized
+
+### 3️⃣ Server Generates JWT
+
+JwtService.generateToken() runs:
+
+Sets subject (= username)
+Sets issued time, expiry
+Signs token with secret key (HS256)
+
+Response returned to client:
+
+```shell
+{
+"token": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI..."
+}
+```
+
+### ✅ Request Flow for Protected API
+
+Now the user calls:
+
+```shell
+GET /v1/players/byPage?page=0&size=5
+Authorization: Bearer eyJh...
+```
+
+### 4️⃣ Request hits Spring Security filter chain
+
+Your SecurityFilterChain sees request is not anonymous → applies JWT filter before UsernamePasswordAuthenticationFilter.
+
+### 5️⃣ JwtAuthenticationFilter runs
+
+It:
+```shell
+Step	                  Action
+Extract	                  Reads Authorization header
+Validate format	          Must start with Bearer
+Parse token	          jwtService.extractUsername()
+Load user	          Calls userDetailsService.loadUserByUsername()
+Validate token	          jwtService.isTokenValid(token, user)
+```
+
+If valid → creates an Authentication object:
+
+```shell
+UsernamePasswordAuthenticationToken
+```
+
+and puts it into:
+
+```shell
+SecurityContextHolder
+```
+
+So Spring Security now knows the user is authenticated.
+
+### ✅ 6️⃣ Controller executes
+
+Your controller method runs normally (user is authenticated).
+
+Because SecurityContext has the username, you can retrieve current user anytime:
+
+```shell
+SecurityContextHolder.getContext().getAuthentication().getName();
+```
+
+### ✅ 7️⃣ No session is stored
+
+Important point:
+
+JWT = stateless
+
+Server does not store authentication in memory or DB
+
+Each request must send JWT
+
+SessionCreationPolicy.STATELESS in config enforces this
+
+🎯 Full Request Lifecycle Summary
+
+```shell
+Step	Description
+1️⃣	Client sends username/password to /login
+2️⃣	Spring validates credentials
+3️⃣	Server issues signed JWT
+4️⃣	Client sends JWT on each request
+5️⃣	Filter verifies JWT validity
+6️⃣	If valid → request reaches controller
+7️⃣	If invalid/missing → 401 Unauthorized
+```
