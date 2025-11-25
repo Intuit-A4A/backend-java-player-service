@@ -28,12 +28,11 @@ public class PlayerService {
         Optional<Player> player = null;
 
         /* simulated network delay */
+        player = playerRepository.findById(playerId);
         try {
-            player = playerRepository.findById(playerId);
-            Thread.sleep((long)(Math.random() * 2000));
-        } catch (Exception e) {
-            LOGGER.error("message=Exception in getPlayerById; exception={}", e.toString());
-            return Optional.empty();
+            Thread.sleep((long) (Math.random() * 2000));
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
         }
         return player;
     }
