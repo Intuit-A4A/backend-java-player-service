@@ -25,10 +25,8 @@ public class PlayerService {
     }
 
     public Optional<Player> getPlayerById(String playerId) {
-        Optional<Player> player = null;
-
+        var player = playerRepository.findById(playerId);
         /* simulated network delay */
-        player = playerRepository.findById(playerId);
         try {
             Thread.sleep((long) (Math.random() * 2000));
         } catch (InterruptedException e) {
