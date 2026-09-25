@@ -1,7 +1,7 @@
 package com.app.playerservicejava.config;
 
 
-import io.github.ollama4j.OllamaAPI;
+import io.github.ollama4j.Ollama;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -22,8 +22,8 @@ public class ChatClientConfiguration {
     }
 
     @Bean
-    public OllamaAPI ollamaAPI() {
-        OllamaAPI api = new OllamaAPI(OLLAMA_HOST);
+    public Ollama ollama() {
+        Ollama api = new Ollama(OLLAMA_HOST);
         api.setRequestTimeoutSeconds(120);
         return api;
     }
