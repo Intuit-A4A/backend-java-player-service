@@ -2,8 +2,8 @@ package com.app.playerservicejava.service.chat;
 
 import io.github.ollama4j.OllamaAPI;
 import io.github.ollama4j.exceptions.OllamaBaseException;
-import io.github.ollama4j.models.Model;
-import io.github.ollama4j.models.OllamaResult;
+import io.github.ollama4j.models.response.Model;
+import io.github.ollama4j.models.response.OllamaResult;
 import io.github.ollama4j.types.OllamaModelType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
