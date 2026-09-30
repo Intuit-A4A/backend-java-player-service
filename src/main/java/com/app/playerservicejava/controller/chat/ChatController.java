@@ -1,8 +1,8 @@
 package com.app.playerservicejava.controller.chat;
 
 import com.app.playerservicejava.service.chat.ChatClientService;
-import io.github.ollama4j.exceptions.OllamaBaseException;
-import io.github.ollama4j.models.Model;
+import io.github.ollama4j.exceptions.OllamaException;
+import io.github.ollama4j.models.response.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.List;
 
 @Controller
@@ -28,12 +26,12 @@ public class ChatController {
     private ChatClientService chatClientService;
 
     @PostMapping
-    public @ResponseBody String chat() throws OllamaBaseException, IOException, InterruptedException {
+    public @ResponseBody String chat() throws OllamaException {
         return chatClientService.chat();
     }
 
     @GetMapping("/list-models")
-    public ResponseEntity<List<Model>> listModels() throws OllamaBaseException, IOException, URISyntaxException, InterruptedException {
+    public ResponseEntity<List<Model>> listModels() throws OllamaException {
         List<Model> models = chatClientService.listModels();
         return ResponseEntity.ok(models);
     }
