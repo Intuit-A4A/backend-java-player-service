@@ -6,6 +6,7 @@ import io.github.ollama4j.models.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping(value = "v1/chat", produces = { MediaType.APPLICATION_JSON_VALUE })
@@ -28,13 +31,31 @@ public class ChatController {
     private ChatClientService chatClientService;
 
     @PostMapping
-    public @ResponseBody String chat() throws OllamaBaseException, IOException, InterruptedException {
-        return chatClientService.chat();
+    public ResponseEntity<?> chat() {
+        try {
+            return ResponseEntity.ok(chatClientService.chat());
+        } catch (ConnectException exc) {
+            return ollamaUnavailable("Ollama chat failed. Ensure tinyllama is pulled and Ollama is running on port 11434.", exc);
+        } catch (OllamaBaseException | IOException | InterruptedException exc) {
+            return ollamaUnavailable("Ollama chat failed.", exc);
+        }
     }
 
     @GetMapping("/list-models")
-    public ResponseEntity<List<Model>> listModels() throws OllamaBaseException, IOException, URISyntaxException, InterruptedException {
-        List<Model> models = chatClientService.listModels();
-        return ResponseEntity.ok(models);
+    public ResponseEntity<?> listModels() {
+        try {
+            List<Model> models = chatClientService.listModels();
+            return ResponseEntity.ok(models);
+        } catch (ConnectException exc) {
+            return ollamaUnavailable("Ollama is unavailable. Start the Ollama container and pull tinyllama.", exc);
+        } catch (OllamaBaseException | IOException | URISyntaxException | InterruptedException exc) {
+            return ollamaUnavailable("Ollama is unavailable. Start the Ollama container and pull tinyllama.", exc);
+        }
+    }
+
+    private ResponseEntity<Map<String, String>> ollamaUnavailable(String error, Exception exc) {
+        LOGGER.error("message={}; exception={}", error, exc.toString());
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
+                .body(Map.of("error", error, "detail", String.valueOf(exc.getMessage())));
     }
 }
