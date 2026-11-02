@@ -1,0 +1,7 @@
+# 3.2 — separate connect timeout from read timeout. Read stays at the stock 120s.
+app:
+  chat:
+    stage: timeouts
+    async-enabled: true
+    connect-timeout-ms: 2000
+    read-timeout-ms: 120000
