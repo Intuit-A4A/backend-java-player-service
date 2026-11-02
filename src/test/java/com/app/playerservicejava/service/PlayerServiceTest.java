@@ -5,29 +5,24 @@ import com.app.playerservicejava.model.Players;
 import com.app.playerservicejava.repository.PlayerRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.util.ReflectionTestUtils;
 
+import java.lang.reflect.Proxy;
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
-import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
 class PlayerServiceTest {
 
-    @Mock
-    private PlayerRepository playerRepository;
-
-    @InjectMocks
     private PlayerService playerService;
 
     private Player player;
 
+    /**
+     * Configures the service with deterministic repository results.
+     */
     @BeforeEach
     void setUp() {
         player = new Player();
@@ -35,12 +30,16 @@ class PlayerServiceTest {
         player.setBirthYear("1919");
         player.setFirstName("Jackie");
         player.setLastName("Robinson");
+
+        playerService = new PlayerService();
+        ReflectionTestUtils.setField(
+                playerService,
+                "playerRepository",
+                repositoryReturning(player));
     }
 
     @Test
     void getPlayersIncludesCompletePlayersForAdminUsers() {
-        when(playerRepository.findAll()).thenReturn(List.of(player));
-
         Players players = playerService.getPlayers(true);
 
         assertThat(players.getPlayers())
@@ -50,8 +49,6 @@ class PlayerServiceTest {
 
     @Test
     void getPlayersIncludesCompletePlayersWithoutLastNamesForRegularUsers() {
-        when(playerRepository.findAll()).thenReturn(List.of(player));
-
         Players players = playerService.getPlayers(false);
 
         assertThat(players.getPlayers())
@@ -64,8 +61,6 @@ class PlayerServiceTest {
 
     @Test
     void getPlayerByIdIncludesCompletePlayerForAdminUser() {
-        when(playerRepository.findById("player-1")).thenReturn(Optional.of(player));
-
         Optional<Player> visiblePlayer = playerService.getPlayerById("player-1", true);
 
         assertThat(visiblePlayer)
@@ -76,8 +71,6 @@ class PlayerServiceTest {
 
     @Test
     void getPlayerByIdIncludesCompletePlayerWithoutLastNameForRegularUser() {
-        when(playerRepository.findById("player-1")).thenReturn(Optional.of(player));
-
         Optional<Player> visiblePlayer = playerService.getPlayerById("player-1", false);
 
         assertThat(visiblePlayer)
@@ -87,5 +80,20 @@ class PlayerServiceTest {
 
         // Confirm response filtering does not erase the last name from the repository entity.
         assertThat(player.getLastName()).isEqualTo("Robinson");
+    }
+
+    /**
+     * Creates a repository proxy that supports the reads exercised by the service.
+     */
+    private PlayerRepository repositoryReturning(Player storedPlayer) {
+        return (PlayerRepository) Proxy.newProxyInstance(
+                PlayerRepository.class.getClassLoader(),
+                new Class<?>[]{PlayerRepository.class},
+                (proxy, method, arguments) -> switch (method.getName()) {
+                    case "findAll" -> List.of(storedPlayer);
+                    case "findById" -> Optional.of(storedPlayer);
+                    default -> throw new UnsupportedOperationException(
+                            "Unexpected repository method: " + method.getName());
+                });
     }
 }
