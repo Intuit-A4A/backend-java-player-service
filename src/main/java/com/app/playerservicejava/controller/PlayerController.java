@@ -20,17 +20,8 @@ public class PlayerController {
     private PlayerService playerService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<Players> getPlayers(
-            @RequestParam(name = "limit", required = false) Integer limit,
-            @RequestParam(name = "offset", required = false) Integer offset) {
-        if (limit == null) {
-            return ok(playerService.getPlayers());
-        }
-        int start = offset == null ? 0 : offset;
-        if (limit < 1 || start < 0 || start % limit != 0) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        return ok(playerService.getPlayerPage(limit, start));
+    public ResponseEntity<Players> getPlayers() {
+        return ok(playerService.getPlayers());
     }
 
     @GetMapping("/{id}")

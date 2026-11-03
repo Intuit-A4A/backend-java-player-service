@@ -4,15 +4,9 @@ import com.app.playerservicejava.chat.ChatResilienceProperties;
 import io.github.ollama4j.OllamaAPI;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.client.RestTemplate;
 
 @Configuration
 public class ChatClientConfiguration {
-
-    @Bean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
-    }
 
     @Bean
     public OllamaAPI ollamaAPI(ChatResilienceProperties properties) {

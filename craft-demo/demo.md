@@ -205,7 +205,7 @@ Comparison is two profiles only. No retry, no circuit breaker, no extra stage YA
 **Database failures are 500.** `PlayerService` no longer swallows `DataAccessException`. Missing id stays **404**.
 
 ```bash
-sed -n '36,49p' src/main/java/com/app/playerservicejava/service/PlayerService.java
+sed -n '26,39p' src/main/java/com/app/playerservicejava/service/PlayerService.java
 sed -n '19,26p' src/main/java/com/app/playerservicejava/controller/PlayerExceptionHandler.java
 mvn -Dtest=PlayerErrorStatusTest test
 ```
@@ -221,7 +221,7 @@ cat src/main/resources/application-timeouts.yml
 **Shorter chat timeout via ollama4j.** `ChatClientConfiguration` sets `OllamaAPI.setRequestTimeoutSeconds` from `app.chat.read-timeout-ms`.
 
 ```bash
-sed -n '17,28p' src/main/java/com/app/playerservicejava/config/ChatClientConfiguration.java
+sed -n '11,20p' src/main/java/com/app/playerservicejava/config/ChatClientConfiguration.java
 cat src/main/resources/application-timeouts.yml
 ```
 

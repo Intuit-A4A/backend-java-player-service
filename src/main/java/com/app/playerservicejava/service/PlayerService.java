@@ -5,8 +5,6 @@ import com.app.playerservicejava.model.Players;
 import com.app.playerservicejava.repository.PlayerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -23,14 +21,6 @@ public class PlayerService {
 
     public Players getPlayers() {
         return loadAll();
-    }
-
-    /**
-     * One window of the table. {@code offset} is a row start and must be a multiple of {@code limit}.
-     * The full {@link #getPlayers()} call reads every row; this call reads one page.
-     */
-    public Players getPlayerPage(int limit, int offset) {
-        return loadPage(limit, offset);
     }
 
     public Optional<Player> getPlayerById(String playerId) {
@@ -52,13 +42,6 @@ public class PlayerService {
     private Players loadAll() {
         Players players = new Players();
         playerRepository.findAll()
-                .forEach(players.getPlayers()::add);
-        return players;
-    }
-
-    private Players loadPage(int limit, int offset) {
-        Players players = new Players();
-        playerRepository.findAll(PageRequest.of(offset / limit, limit, Sort.by("playerId")))
                 .forEach(players.getPlayers()::add);
         return players;
     }
