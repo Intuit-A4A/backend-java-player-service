@@ -1,314 +1,186 @@
 # Player service demo
 
-Run this once. Later blocks assume this shell.
-
-```bash
-export JAVA_HOME="/opt/homebrew/opt/openjdk@17"
-export PATH="$JAVA_HOME/bin:$PATH"
-cd ~/git/player-service-java
-```
-
-Terminal 1 stays on `mvn spring-boot:run`. Paste the other blocks in terminal 2, unless a block says to leave it running.
+**One-line pitch:** A Spring Boot service with a core player API and a secondary chat API over Ollama. On `main` you cannot see whether the player API is healthy, you misread database outages as 404, and hung chat can starve Tomcat so player calls never start. The branch adds observability first, then a minimal chat change so player traffic stays up under the same load.
 
 ---
 
-## 1. Currently on main
+## 1. Architecture
 
-`main` is the stock service, plus two local commits: drop the duplicate `spring-boot-starter-data-jpa` so Maven 3.10 can build, and bump `ollama4j` to 1.0.100 so `list-models` can read the `capabilities` field.
-
-```bash
-git branch --show-current
-git log -3 --oneline
-git status -sb
-```
-
-Terminal 1:
-
-```bash
-mvn spring-boot:run
-```
-
----
-
-## 2. Repo architecture and APIs
-
-One Spring Boot process on port 8080. Player reads and chat calls share the Tomcat worker pool. H2 is in memory. Ollama is a separate process on port 11434.
+One JVM. Player and chat share Tomcat on **8080**. H2 is in memory. Ollama is out of process.
 
 ```text
 PlayerController  -> PlayerService -> PlayerRepository -> H2
-ChatController    -> ChatClientService -> OllamaAPI -> http://127.0.0.1:11434
+ChatController    -> ChatClientService -> OllamaAPI -> Ollama
 ```
 
-```bash
-find src/main/java -name '*.java' | sort
-```
+| API | Role |
+|-----|------|
+| `GET /v1/players`, `GET /v1/players/{id}` | Core. By-id sleeps 0–2s on purpose |
+| `GET /v1/chat/list-models`, `POST /v1/chat` | Secondary. LLM via Ollama |
 
-| API | What it does |
-|-----|----------------|
-| `GET /v1/players` | Every player in H2 |
-| `GET /v1/players/{id}` | One player. Sleeps 0–2s on purpose |
-| `GET /v1/chat/list-models` | Models registered in Ollama |
-| `POST /v1/chat` | Asks tinyllama for a haiku |
-
-```bash
-colima start
-docker start ollama
-until curl -sf http://127.0.0.1:11434/api/tags >/dev/null; do sleep 2; done
-curl -s http://127.0.0.1:11434/api/tags | grep -i tinyllama || docker exec ollama ollama pull tinyllama
-```
-
-```bash
-curl -s -o /dev/null -w "players %{http_code}\n" localhost:8080/v1/players
-curl -s -o /dev/null -w "player %{http_code}\n" localhost:8080/v1/players/aardsda01
-curl -si localhost:8080/v1/players/no-such-player | head -n 1
-curl -s -w "\nmodels %{http_code}\n" localhost:8080/v1/chat/list-models
-```
-
-A missing id is 404 with an empty body. `list-models` is 200 when Ollama is up.
+**Success criterion for this talk:** player endpoints return **200 within the client deadline** while chat is stuck on a model that accepts TCP and never responds. Chat 503 is acceptable; player **client timeout** is not.
 
 ---
 
-## 3. Problem
+## 2. Problems
 
-### No observability when the pool is saturated
+### 2.1 No observability for the system
 
-On `main` there is no Prometheus scrape, no Grafana dashboard, and no in-app SLI. HTTP metrics exist only if you add Actuator and wire a stack yourself.
+On **`main`**, the service has **no operational picture**:
 
-When chat holds every Tomcat worker, new player calls may never get a response line before the client gives up. Without metrics on a separate management port, even a scrape of `/actuator/prometheus` on **8080** can stall behind the same workers. You cannot see **Tomcat busy → 40**, you cannot stack **200 / 503 / 500** by API, and you cannot tell **client timeouts** (no HTTP status) from a fast **503** from the app.
+- No Prometheus scrape, no Grafana, no dashboard checked into the repo
+- No Actuator metrics or `/actuator/prometheus` wired into a stack
+- No in-app SLI or `/v1/reliability/*` endpoints
+- No documented split between liveness and readiness (what “healthy” means for player vs chat)
+- Under load or outage, you rely on **logs and ad-hoc curls**, not time series or a single availability number
 
-The branch adds Actuator on **8081**, Prometheus, Grafana, and ramp scripts that label outcomes (`http_200`, `http_503`, `client_timeout`).
+That gap is **always** true, even when Tomcat is idle. You cannot answer: *How many player calls completed? What status codes? Is the pool filling? Is the player API meeting SLO?*
 
-### Database failure is returned as 404
+**Pool saturation makes it worse:** if metrics were scraped on **8080**, the scrape needs a worker like any other request. When all workers are busy, series go blank exactly when you need them. The demo pins max threads to **40** so that failure mode shows on a laptop.
 
-Still on `main`. The `sed` ranges in this section are main's line numbers.
+### 2.2 A database failure is returned as 404
 
-`getPlayerById` catches every exception and returns empty. The controller answers 404 for that empty result. The 0–2s sleep stays; it is the simulated delay. File: `src/main/java/com/app/playerservicejava/service/PlayerService.java`.
+`PlayerService.getPlayerById` on `main` catches every exception and returns empty. The controller maps empty to **404**. A real id with a missing `PLAYERS` table looks like “player not found,” not “data store failed.”
 
-```bash
-sed -n '27,39p' src/main/java/com/app/playerservicejava/service/PlayerService.java
-sed -n '28,36p' src/main/java/com/app/playerservicejava/controller/PlayerController.java
-```
+### 2.3 A stuck chat call holds a Tomcat worker
 
-`aardsda01` is a real id. Drop `PLAYERS`, then request that id. The app log says `Table "PLAYERS" not found`. The HTTP status is still 404 with an empty body.
-
-```bash
-jsession=$(curl -s http://localhost:8080/h2-console/ | sed -n 's/.*jsessionid=\([a-f0-9]*\).*/\1/p')
-curl -s -o /dev/null "http://localhost:8080/h2-console/login.jsp?jsessionid=$jsession"
-curl -s -o /dev/null \
-  --data-urlencode 'language=en' \
-  --data-urlencode 'setting=Generic H2 (Embedded)' \
-  --data-urlencode 'name=Generic H2 (Embedded)' \
-  --data-urlencode 'driver=org.h2.Driver' \
-  --data-urlencode 'url=jdbc:h2:mem:playerdb' \
-  --data-urlencode 'user=sa' \
-  --data-urlencode 'password=' \
-  "http://localhost:8080/h2-console/login.do?jsessionid=$jsession"
-curl -s -o /dev/null \
-  --data-urlencode 'sql=DROP TABLE PLAYERS' \
-  "http://localhost:8080/h2-console/query.do?jsessionid=$jsession"
-curl -si localhost:8080/v1/players/aardsda01 | head -n 1
-```
-
-In terminal 1, Ctrl-C and start the app again so the table is loaded:
-
-```bash
-mvn spring-boot:run
-```
-
-### A stuck chat call holds a Tomcat worker for 120s
-
-Chat runs on the request thread. `ChatClientConfiguration` sets one timeout, 120 seconds, and no connect timeout. Tomcat's default max is 200 workers. Each in-flight chat call occupies one worker until that timeout.
-
-```bash
-sed -n '25,28p' src/main/java/com/app/playerservicejava/config/ChatClientConfiguration.java
-```
-
-Stopping Ollama is a fast 503. Nothing accepts the connection, so the worker is released at once.
-
-```bash
-docker stop ollama
-curl -s -m 5 -w "refused %{http_code} in %{time_total}s\n" localhost:8080/v1/chat/list-models
-```
-
-For the ramp test, scripts use a **hang peer** instead of `nc`: bind `127.0.0.1:11434`, accept TCP, never send an HTTP body. That mimics a connected model that never responds.
-
-When enough chat calls are in flight on Tomcat threads, player lookups have no worker and do not finish within the load script's deadline. H2 can be healthy the whole time. The branch pins Tomcat to **40** threads so a laptop can reproduce saturation quickly.
+On `main`, chat runs on the **request thread** with one **120s** ollama4j timeout. Refused TCP fails fast; a hang peer that already accepted holds the worker until timeout. Enough concurrent chat calls and **player work never gets a thread**. H2 and the JVM can still be fine.
 
 ---
 
-## 4. Monitoring and availability branch
+## 3. Approach, challenges, solutions
 
-```bash
-git checkout craft-demo/availability
-git branch --show-current
-git log --oneline main..HEAD
-git diff --stat main...HEAD
+### Approach
+
+**First:** make the system observable on a path the API pool cannot block. **Second:** compare **baseline** vs **`timeouts`** profile—async chat plus a **2s** Ollama timeout—under the same ramp and hang peer.
+
+```text
+Clients ---------> :8080 (Tomcat, max 40) -----> PlayerController / ChatController
+                         |
+                         | HTTP response completed
+                         v
+              Micrometer: http_server_requests_seconds_count{uri,status}
+              Tomcat MBean (mbeanregistry on): tomcat_threads_busy_threads
+              SliRecordingFilter -> SliTracker (player-only availability ratio)
+
+:8081 (management) <----- Prometheus (1s scrape) <----- Grafana "Availability"
+         health / info / prometheus
 ```
 
-Ctrl-C the app in terminal 1. Build once:
-
-```bash
-mvn -DskipTests package
-```
-
-### Monitoring and dashboard
-
-**Stack.** Prometheus scrapes **`host.docker.internal:8081`** (management port). API traffic stays on **8080**.
-
-```bash
-sh craft-demo/observability/up.sh
-```
-
-Open http://localhost:3000/d/availability/availability
-
-| Panel | What it shows |
+| Layer | What you watch |
 |-------|----------------|
-| Request counts | `increase(...)` stacked **200 / 503 / 500** per API (not req/s) |
-| Tomcat busy threads | Saturation signal; dashed line at **40** |
-| (No latency) | Pool **503** is fast; hung baseline chat may not complete, so latency is misleading |
+| **Saturation** | `tomcat_threads_busy_threads` → configured max (40) |
+| **Completed work** | Per-API `increase(...)` stacked **200 / 503 / 500** (finished requests only) |
+| **SLI** | Player successes ÷ player requests that reached the app (HTTP below 500); chat excluded |
+| **Ramp JSON** | `client_timeout` when the load generator gives up—**not** in Grafana |
 
-**In-app SLI and probes.** Files: `reliability/SliRecordingFilter.java`, `reliability/SliTracker.java`, `reliability/ServiceInfoContributor.java`, `resources/application.yml`.
+Two profiles, same hang simulation:
 
-- `SliTracker` publishes player availability (player HTTP below 500). Chat is tracked but not in that ratio.
-- Liveness: `livenessState` only.
-- Readiness: `readinessState` + H2 (Ollama omitted).
-- `/v1/reliability/mode` shows active profile (`baseline` vs `timeouts`).
+| Profile | Chat | Ollama timeout | Player under hang |
+|---------|------|----------------|-------------------|
+| **Baseline** | Tomcat thread | 120s | **client_timeout** after pool fills |
+| **Timeouts** | 8× `chat-exec`, queue 0 | 2s | **200**; chat **503** |
 
-Terminal 1 (example hardened profile):
+### Challenges
 
-```bash
-java -jar target/player-service-java-0.0.1-SNAPSHOT.jar --spring.profiles.active=timeouts
-```
+- **Blind by default:** no stack on `main`; no single place to see player vs chat behavior.
+- **Wrong port for scrape:** 8080 metrics disappear when the pool is saturated.
+- **Missing Tomcat gauge:** without `server.tomcat.mbeanregistry.enabled`, busy-thread metrics are not exported.
+- **Metrics vs user experience:** Grafana counts **completed** responses; hung calls and client timeouts need the ramp log.
+- **Probe design:** Ollama on readiness would drain player traffic during a model outage; liveness on “stuck thread” would restart a JVM that can still serve players.
+- **One timeout knob:** ollama4j uses one request timeout; the hang peer is a long **read** wait, not a connect failure.
 
-```bash
-curl -s localhost:8081/actuator/health/liveness | python3 -m json.tool
-curl -s localhost:8081/actuator/health/readiness | python3 -m json.tool
-curl -s localhost:8081/actuator/info | python3 -m json.tool
-curl -s localhost:8081/actuator/prometheus | head
-curl -s localhost:8080/v1/reliability/mode | python3 -m json.tool
-curl -s -X POST localhost:8080/v1/reliability/sli/reset >/dev/null
-curl -s -o /dev/null localhost:8080/v1/players/aardsda01
-curl -s localhost:8080/v1/reliability/sli | python3 -m json.tool
-```
+### Solutions
 
-When all **8080** workers are busy, health and Prometheus on **8081** still answer. That is what makes the dashboard usable during baseline saturation.
+| Area | What we did |
+|------|-------------|
+| **Metrics & probes** | `management.server.port: 8081`; expose health, info, prometheus; liveness = process, readiness = **db** only |
+| **Tomcat visibility** | `server.tomcat.mbeanregistry.enabled: true`; Tomcat max **40** for demo saturation |
+| **SLI & stage** | Filter + tracker + `/v1/reliability/mode` and `/sli`; `/actuator/info` documents the split |
+| **Dashboard** | Prometheus + Grafana; busy threads + status counts (no latency panels) |
+| **Correct errors** | DB exceptions → **500** via `PlayerExceptionHandler`; missing id stays **404** |
+| **Availability fix** | `async-enabled` + bounded pool; `read-timeout-ms: 2000` on **`timeouts`** profile |
 
-### Availability fix (baseline vs timeouts only)
+### Key files (what changed)
 
-Comparison is two profiles only. No retry, no circuit breaker, no extra stage YAML files.
+**Monitoring & reliability**
 
-| Profile | Chat execution | Ollama timeouts | Player under hang load |
-|---------|----------------|-----------------|-------------------------|
-| **baseline** (default) | Tomcat request thread | ollama4j **120s** request timeout | **client_timeout** once Tomcat is full |
-| **timeouts** (`application-timeouts.yml`) | 8 `chat-exec` threads, queue 0 | ollama4j **2s** request timeout | **http_200**; chat **503** (timeout on hang peer) |
+| File | Role |
+|------|------|
+| `src/main/resources/application.yml` | 8080/8081 split, Tomcat 40, MBean registry, health groups, histogram |
+| `src/main/java/.../reliability/SliRecordingFilter.java` | Records finished `/v1/players` and `/v1/chat` |
+| `src/main/java/.../reliability/SliTracker.java` | Player availability ratio; chat tracked but excluded |
+| `src/main/java/.../reliability/ReliabilityController.java` | `/v1/reliability/mode`, `/sli`, `/sli/reset` |
+| `src/main/java/.../reliability/ServiceInfoContributor.java` | `/actuator/info` service block |
+| `craft-demo/observability/prometheus.yml` | Scrape `host.docker.internal:8081` |
+| `craft-demo/observability/up.sh` | Start Prometheus + Grafana |
+| `craft-demo/observability/grafana/dashboards/availability.json` | Busy threads + per-API status counts |
+| `scripts/ramp_load_test.py` | Hang peer + ramp; writes `ramp-baseline.json`, `ramp-timeouts.json` |
 
-**Database failures are 500.** `PlayerService` no longer swallows `DataAccessException`. Missing id stays **404**.
+**Player correctness**
 
-```bash
-sed -n '26,39p' src/main/java/com/app/playerservicejava/service/PlayerService.java
-sed -n '19,26p' src/main/java/com/app/playerservicejava/controller/PlayerExceptionHandler.java
-mvn -Dtest=PlayerErrorStatusTest test
-```
+| File | Role |
+|------|------|
+| `src/main/java/.../service/PlayerService.java` | Propagate DB errors; keep 0–2s latency simulation |
+| `src/main/java/.../controller/PlayerExceptionHandler.java` | Map `DataAccessException` → **500** |
 
-**Chat leaves Tomcat when `async-enabled` is true.** `ChatController` returns a `Callable`; `ChatAsyncConfig` runs on `chat-exec-*`.
+**Chat / availability (baseline vs timeouts)**
 
-```bash
-sed -n '45,51p' src/main/java/com/app/playerservicejava/controller/chat/ChatController.java
-sed -n '20,30p' src/main/java/com/app/playerservicejava/chat/ChatAsyncConfig.java
-cat src/main/resources/application-timeouts.yml
-```
+| File | Role |
+|------|------|
+| `src/main/java/.../chat/ChatResilienceProperties.java` | `app.chat.*`: stage, async, pool size, read timeout |
+| `src/main/java/.../config/ReliabilityConfiguration.java` | Binds `ChatResilienceProperties` |
+| `src/main/java/.../chat/ChatAsyncConfig.java` | `chat-exec` pool; MVC async support |
+| `src/main/java/.../controller/chat/ChatController.java` | `Callable` when async; 503 on timeout / pool full |
+| `src/main/java/.../config/ChatClientConfiguration.java` | `OllamaAPI.setRequestTimeoutSeconds` from properties |
+| `src/main/resources/application-timeouts.yml` | Profile: async + **2s** timeout |
 
-**Shorter chat timeout via ollama4j.** `ChatClientConfiguration` sets `OllamaAPI.setRequestTimeoutSeconds` from `app.chat.read-timeout-ms`.
+### Test
 
-```bash
-sed -n '11,20p' src/main/java/com/app/playerservicejava/config/ChatClientConfiguration.java
-cat src/main/resources/application-timeouts.yml
-```
+Same ramp for both profiles (hang on **11434**, traffic stepped every 5s). Checked-in result:
 
-### Ramp load test (capture this data)
+| Signal | Baseline | Timeouts |
+|--------|----------|----------|
+| Peak Tomcat busy | **40** | **~2** |
+| Player calls | early **200**, then **client_timeout** | **28/28** **200** |
+| Chat calls | **client_timeout** | **503** |
 
-Hang simulation: `docker stop ollama`, then the script starts **`hang_server`** on `127.0.0.1:11434` (accept, never reply). Every **5s**, add **6** chat calls (`list-models` + `POST /v1/chat`) and **2** player calls (list + by-id). Outcomes are in JSON as **`outcome`**, not raw HTTP `0`.
-
-Watch Grafana while running. After both runs, see `craft-demo/results/dashboard/README.md` and `ramp-comparison.md`.
-
-```bash
-python3 scripts/ramp_load_test.py baseline
-python3 scripts/ramp_load_test.py timeouts
-```
-
-Expected shape:
-
-| Signal | baseline saturated | timeouts |
-|--------|-------------------|----------|
-| Tomcat busy (Grafana) | → **40** | stays low |
-| Player ramp JSON | **client_timeout** after pool fills | **http_200** |
-| Chat ramp JSON | **client_timeout** (no HTTP within client deadline) | **http_503** (2s read timeout on hang peer) |
-
-### Grafana screenshots (checked in)
-
-After both ramp runs, open the dashboard (last **15 minutes**), capture a PNG, then overlay the ramp totals:
-
-```bash
-# Save browser screenshot to:
-# craft-demo/results/dashboard/grafana-ramp-raw.png
-python3 scripts/annotate_ramp_screenshot.py
-```
-
-| File | Purpose |
-|------|---------|
-| [`grafana-ramp-raw.png`](results/dashboard/grafana-ramp-raw.png) | Dashboard during/after ramp (Prometheus data) |
-| [`grafana-ramp-annotated.png`](results/dashboard/grafana-ramp-annotated.png) | Same view + baseline vs timeouts summary |
-
-![Grafana ramp (annotated)](results/dashboard/grafana-ramp-annotated.png)
+![Grafana ramp](results/dashboard/grafana-ramp-annotated.png)
 
 ---
 
-## 5. Beyond this process
+## 4. Impact
 
-The numbers above are one JVM. A readiness probe on that single process does not raise them.
+- **Observability:** You can see saturation and completed status codes while the failure is happening, and separate “client gave up” from “app returned 503.”
+- **Player API:** Under the same hung model, player calls stay **200** instead of timing out at the client—on **one JVM**, with monitoring that still scrapes.
+- **Operability:** DB outage is **500**, not a fake 404. Readiness stays **UP** when only Ollama is down, so this instance can keep taking player traffic.
 
-### Readiness
+Fleet effects (replicas, second JVM) are in **section 6**.
 
-Liveness answers "restart this process?" It stays "the process is up." A stuck chat thread is not a dead process. Failing liveness on that would kill the JVM and drop player calls that were still running.
+---
 
-Readiness answers "send this process traffic?" Here it is H2, not Ollama. With the app up and Ollama stopped, readiness on **8081** stays **UP** and `list-models` on **8080** is **503**. Player lookups still return **200**. That is the point: a dead model must not take player traffic off the instance.
+## 5. Learnings
 
-```bash
-docker stop ollama
-curl -s localhost:8081/actuator/health/readiness | python3 -m json.tool
-curl -s -m 5 -o /dev/null -w "models %{http_code}\n" localhost:8080/v1/chat/list-models
-curl -s -o /dev/null -w "player %{http_code}\n" localhost:8080/v1/players/aardsda01
-docker start ollama
-```
+- Define availability for the **player API**, not “any route” and not “process up.”
+- **Observability is a product feature:** metrics port, MBean registry, SLI, and dashboards are part of the fix—not only something you add after an incident.
+- **Busy threads** = capacity; **status counts** = completed outcomes; **ramp outcomes** = what the user felt when nothing finished.
+- **More Tomcat threads** do not fix a 120s chat call on the request thread; **decouple + shorter timeout** does.
+- **Probes and replicas** are the next step: readiness routes traffic; a second JVM shows why that matters. Splitting player and chat deployments is the same isolation at larger scale.
 
-Readiness improves availability only when some other instance can take the request. One replica: failing readiness means the only copy gets no traffic, so availability goes to 0 until it passes again. Several replicas behind a load balancer: an instance whose database is down is removed, and the others keep serving players. Putting Ollama on that check would remove every instance during a model outage and player availability would fall.
+---
 
-### Other changes
+## 6. Beyond this process
 
-| Change | What it improves | In this demo |
-|--------|------------------|--------------|
-| Readiness is H2, not Ollama | A dead model does not remove player traffic from this instance | **Show.** The curls above. |
-| A second process | Killing one JVM leaves the other returning 200 | **Show.** Two ports, no new code. |
-| Caller deadline | Ramp script labels **`client_timeout`** when the app never returns HTTP in time | **Show.** `ramp_load_test.py`. |
-| Graceful shutdown | In-flight player calls finish after the process is marked not ready | Say it. The 0–2s sleep would make one request visible. |
-| Rollout keeps one ready replica | A deploy does not take down the last healthy copy | Say it. Needs more than one machine or a cluster. |
-| Player API and chat API as two deployments | A full chat pool cannot sit in the player process | Say it. Async chat pool already splits work inside one JVM. |
-| Database that outlives the process | Restart does not drop the only copy of the data | Say it. `schema.sql` reloads players on startup. |
-| More Tomcat threads | More room before the pool is full | Do not show. A 120s chat call still occupies one worker on baseline. |
-| Prometheus / Grafana / SLI | See busy threads and completed status codes under load | **Show.** Section 4 dashboard and ramp JSON. |
+Section 3 is **one JVM**. Probes describe this process; they do not by themselves raise availability.
 
-Second process. Terminal 1 is already on **8080** (management on **8081**). Terminal 2 starts another copy on **8082** (its management port will be **8083** unless you override).
+**Liveness** — restart only when the process is dead, not when a chat thread is stuck.
 
-```bash
-java -jar target/player-service-java-0.0.1-SNAPSHOT.jar --server.port=8082 --spring.profiles.active=timeouts
-```
+**Readiness** — send player traffic when **H2** is good; omit Ollama so a model outage does not drain this instance. Readiness helps only with **another replica** to take work; on a single instance, failing readiness removes the only copy.
 
-```bash
-curl -s -o /dev/null -w "8080 %{http_code}\n" localhost:8080/v1/players/aardsda01
-curl -s -o /dev/null -w "8082 %{http_code}\n" localhost:8082/v1/players/aardsda01
-lsof -tiTCP:8080 -sTCP:LISTEN | xargs kill
-curl -s -m 5 -o /dev/null -w "8080 after stop %{http_code}\n" localhost:8080/v1/players/aardsda01
-curl -s -o /dev/null -w "8082 %{http_code}\n" localhost:8082/v1/players/aardsda01
-```
-
-`8080 after stop` fails. `8082` is 200. That is the availability gain from a second instance. Readiness is what tells a load balancer to make that same choice. On one process, failing readiness only stops traffic to the only copy.
+| Change | What it improves |
+|--------|------------------|
+| Readiness is H2, not Ollama | A dead model does not remove player traffic from this instance |
+| Second JVM | One process can fail while the other still serves players |
+| Graceful shutdown | In-flight player calls can finish instead of being cut off on deploy or SIGTERM |
+| Player and chat as two deployments | Chat load cannot saturate the player process |
+| Durable database | Restart does not imply losing the only copy of player data |

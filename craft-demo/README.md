@@ -1,6 +1,8 @@
 # Craft demo
 
-Presenter script: [`demo.md`](demo.md)
+Presentation (no commands): [`demo.md`](demo.md)
+
+Speaker notes (commands and monitoring design): [`demo-note.md`](demo-note.md)
 
 **Branch:** `craft-demo/availability` · **Profiles:** default baseline · `--spring.profiles.active=timeouts`
 
