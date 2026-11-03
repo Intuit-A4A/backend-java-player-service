@@ -1,0 +1,53 @@
+{
+  "stage": "decouple",
+  "mode": {
+    "stage": "decouple",
+    "asyncEnabled": true,
+    "poolSize": 8,
+    "connectTimeoutMs": 0,
+    "readTimeoutMs": 120000,
+    "retries": 0,
+    "retryBudgetMs": 0,
+    "backoffInitialMs": 200,
+    "backoffMultiplier": 2,
+    "circuitBreakerEnabled": false,
+    "circuitState": "CLOSED"
+  },
+  "admittedChat": {
+    "http": 0,
+    "seconds": 8.0,
+    "finished": false,
+    "body": "timeout"
+  },
+  "breakerFollowup": null,
+  "playerSamples": 12,
+  "playerByIdSamples": 6,
+  "playerByIdSuccess": 6,
+  "playerListSamples": 6,
+  "playerListSuccess": 6,
+  "playerSuccess": 12,
+  "playerAvailabilityPct": 100.0,
+  "playerLatencySec": [
+    1.53,
+    0.29,
+    1.93,
+    0.38,
+    0.97,
+    1.7,
+    0.16,
+    0.06,
+    0.04,
+    0.04,
+    0.04,
+    0.03
+  ],
+  "chatBurst": 50,
+  "chatFastFailWithin2s": 43,
+  "chatFastFailPct": 86.0,
+  "connectStall": {
+    "http": 0,
+    "seconds": 6.0,
+    "finished": false,
+    "body": "timeout"
+  }
+}

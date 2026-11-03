@@ -1,0 +1,272 @@
+[
+  {
+    "stage": "baseline",
+    "mode": {
+      "stage": "baseline",
+      "asyncEnabled": false,
+      "poolSize": 8,
+      "connectTimeoutMs": 0,
+      "readTimeoutMs": 120000,
+      "retries": 0,
+      "retryBudgetMs": 0,
+      "backoffInitialMs": 200,
+      "backoffMultiplier": 2,
+      "circuitBreakerEnabled": false,
+      "circuitState": "CLOSED"
+    },
+    "admittedChat": {
+      "http": 0,
+      "seconds": 8.0,
+      "finished": false,
+      "body": "timeout"
+    },
+    "breakerFollowup": null,
+    "playerSamples": 12,
+    "playerByIdSamples": 6,
+    "playerByIdSuccess": 0,
+    "playerListSamples": 6,
+    "playerListSuccess": 0,
+    "playerSuccess": 0,
+    "playerAvailabilityPct": 0.0,
+    "playerLatencySec": [
+      5.0,
+      5.0,
+      5.01,
+      5.0,
+      5.0,
+      5.0,
+      5.0,
+      5.0,
+      5.0,
+      5.0,
+      5.0,
+      5.0
+    ],
+    "chatBurst": 50,
+    "chatFastFailWithin2s": 0,
+    "chatFastFailPct": 0.0,
+    "connectStall": {
+      "http": 0,
+      "seconds": 6.0,
+      "finished": false,
+      "body": "timeout"
+    }
+  },
+  {
+    "stage": "decouple",
+    "mode": {
+      "stage": "decouple",
+      "asyncEnabled": true,
+      "poolSize": 8,
+      "connectTimeoutMs": 0,
+      "readTimeoutMs": 120000,
+      "retries": 0,
+      "retryBudgetMs": 0,
+      "backoffInitialMs": 200,
+      "backoffMultiplier": 2,
+      "circuitBreakerEnabled": false,
+      "circuitState": "CLOSED"
+    },
+    "admittedChat": {
+      "http": 0,
+      "seconds": 8.0,
+      "finished": false,
+      "body": "timeout"
+    },
+    "breakerFollowup": null,
+    "playerSamples": 12,
+    "playerByIdSamples": 6,
+    "playerByIdSuccess": 6,
+    "playerListSamples": 6,
+    "playerListSuccess": 6,
+    "playerSuccess": 12,
+    "playerAvailabilityPct": 100.0,
+    "playerLatencySec": [
+      1.53,
+      0.29,
+      1.93,
+      0.38,
+      0.97,
+      1.7,
+      0.16,
+      0.06,
+      0.04,
+      0.04,
+      0.04,
+      0.03
+    ],
+    "chatBurst": 50,
+    "chatFastFailWithin2s": 43,
+    "chatFastFailPct": 86.0,
+    "connectStall": {
+      "http": 0,
+      "seconds": 6.0,
+      "finished": false,
+      "body": "timeout"
+    }
+  },
+  {
+    "stage": "timeouts",
+    "mode": {
+      "stage": "timeouts",
+      "asyncEnabled": true,
+      "poolSize": 8,
+      "connectTimeoutMs": 2000,
+      "readTimeoutMs": 120000,
+      "retries": 0,
+      "retryBudgetMs": 0,
+      "backoffInitialMs": 200,
+      "backoffMultiplier": 2,
+      "circuitBreakerEnabled": false,
+      "circuitState": "CLOSED"
+    },
+    "admittedChat": {
+      "http": 0,
+      "seconds": 8.0,
+      "finished": false,
+      "body": "timeout"
+    },
+    "breakerFollowup": null,
+    "playerSamples": 12,
+    "playerByIdSamples": 6,
+    "playerByIdSuccess": 6,
+    "playerListSamples": 6,
+    "playerListSuccess": 6,
+    "playerSuccess": 12,
+    "playerAvailabilityPct": 100.0,
+    "playerLatencySec": [
+      1.48,
+      1.32,
+      0.4,
+      1.02,
+      1.08,
+      1.07,
+      0.16,
+      0.05,
+      0.06,
+      0.04,
+      0.03,
+      0.03
+    ],
+    "chatBurst": 50,
+    "chatFastFailWithin2s": 43,
+    "chatFastFailPct": 86.0,
+    "connectStall": {
+      "http": 503,
+      "seconds": 2.05,
+      "finished": true,
+      "body": "{\"error\":\"Ollama call failed\",\"detail\":\"Ollama connect timed out after 2000ms\"}"
+    }
+  },
+  {
+    "stage": "retry",
+    "mode": {
+      "stage": "retry",
+      "asyncEnabled": true,
+      "poolSize": 8,
+      "connectTimeoutMs": 500,
+      "readTimeoutMs": 2000,
+      "retries": 2,
+      "retryBudgetMs": 5000,
+      "backoffInitialMs": 200,
+      "backoffMultiplier": 2,
+      "circuitBreakerEnabled": false,
+      "circuitState": "CLOSED"
+    },
+    "admittedChat": {
+      "http": 503,
+      "seconds": 4.25,
+      "finished": true,
+      "body": "{\"detail\":\"Ollama read timed out after 2000ms\",\"error\":\"Ollama call failed\"}"
+    },
+    "breakerFollowup": null,
+    "playerSamples": 12,
+    "playerByIdSamples": 6,
+    "playerByIdSuccess": 6,
+    "playerListSamples": 6,
+    "playerListSuccess": 6,
+    "playerSuccess": 12,
+    "playerAvailabilityPct": 100.0,
+    "playerLatencySec": [
+      0.69,
+      1.6,
+      0.93,
+      1.13,
+      0.47,
+      0.31,
+      0.15,
+      0.05,
+      0.05,
+      0.04,
+      0.03,
+      0.03
+    ],
+    "chatBurst": 50,
+    "chatFastFailWithin2s": 42,
+    "chatFastFailPct": 84.0,
+    "connectStall": {
+      "http": 503,
+      "seconds": 2.16,
+      "finished": true,
+      "body": "{\"error\":\"Ollama call failed\",\"detail\":\"Ollama connect timed out after 500ms\"}"
+    }
+  },
+  {
+    "stage": "breaker",
+    "mode": {
+      "stage": "breaker",
+      "asyncEnabled": true,
+      "poolSize": 8,
+      "connectTimeoutMs": 500,
+      "readTimeoutMs": 2000,
+      "retries": 2,
+      "retryBudgetMs": 5000,
+      "backoffInitialMs": 200,
+      "backoffMultiplier": 2,
+      "circuitBreakerEnabled": true,
+      "circuitState": "CLOSED"
+    },
+    "admittedChat": {
+      "http": 503,
+      "seconds": 4.23,
+      "finished": true,
+      "body": "{\"error\":\"Ollama call failed\",\"detail\":\"Ollama read timed out after 2000ms\"}"
+    },
+    "breakerFollowup": {
+      "http": 503,
+      "seconds": 0.01,
+      "finished": true,
+      "body": "{\"error\":\"Ollama circuit is open\",\"detail\":\"no call was sent to Ollama\"}"
+    },
+    "playerSamples": 12,
+    "playerByIdSamples": 6,
+    "playerByIdSuccess": 6,
+    "playerListSamples": 6,
+    "playerListSuccess": 6,
+    "playerSuccess": 12,
+    "playerAvailabilityPct": 100.0,
+    "playerLatencySec": [
+      0.71,
+      0.86,
+      0.29,
+      1.21,
+      1.32,
+      1.34,
+      0.16,
+      0.04,
+      0.03,
+      0.03,
+      0.03,
+      0.03
+    ],
+    "chatBurst": 50,
+    "chatFastFailWithin2s": 50,
+    "chatFastFailPct": 100.0,
+    "connectStall": {
+      "http": 503,
+      "seconds": 2.16,
+      "finished": true,
+      "body": "{\"error\":\"Ollama call failed\",\"detail\":\"Ollama connect timed out after 500ms\"}"
+    }
+  }
+]

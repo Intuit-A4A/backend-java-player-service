@@ -15,11 +15,61 @@ spring:
   h2:
     console:
       enabled: true
+  mvc:
+    async:
+      request-timeout: 180000
 
 server:
   port: 8080
-  include-debug-info: true
+  # Stock default is 200. Pinned to 40 so the availability test can saturate the pool on a laptop.
+  # The failure mode is unchanged: each in-flight LLM call on a Tomcat thread consumes one worker.
+  tomcat:
+    threads:
+      max: 40
   error:
     include-message: always
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,metrics
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      show-details: always
+      group:
+        # Process is up. A database or model outage must not restart the pod.
+        liveness:
+          include: livenessState
+        # Player API can be served. Ollama is omitted: a dead model must not
+        # pull player traffic out of the load balancer. Chat reports its own 503.
+        readiness:
+          include: readinessState,db
+  info:
+    java:
+      enabled: true
+    os:
+      enabled: true
+  metrics:
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
 
+# Defaults match the stock client: one 120s timeout, call on the request thread, no retry, no breaker.
+app:
+  chat:
+    stage: baseline
+    ollama-base-url: http://127.0.0.1:11434
+    async-enabled: false
+    pool-size: 8
+    connect-timeout-ms: 0
+    read-timeout-ms: 120000
+    retries: 0
+    retry-budget-ms: 0
+    backoff-initial-ms: 200
+    backoff-multiplier: 2
+    circuit-breaker-enabled: false
+    circuit-failure-threshold: 3
+    circuit-open-ms: 15000

@@ -1,0 +1,58 @@
+{
+  "stage": "breaker",
+  "mode": {
+    "stage": "breaker",
+    "asyncEnabled": true,
+    "poolSize": 8,
+    "connectTimeoutMs": 500,
+    "readTimeoutMs": 2000,
+    "retries": 2,
+    "retryBudgetMs": 5000,
+    "backoffInitialMs": 200,
+    "backoffMultiplier": 2,
+    "circuitBreakerEnabled": true,
+    "circuitState": "CLOSED"
+  },
+  "admittedChat": {
+    "http": 503,
+    "seconds": 4.23,
+    "finished": true,
+    "body": "{\"error\":\"Ollama call failed\",\"detail\":\"Ollama read timed out after 2000ms\"}"
+  },
+  "breakerFollowup": {
+    "http": 503,
+    "seconds": 0.01,
+    "finished": true,
+    "body": "{\"error\":\"Ollama circuit is open\",\"detail\":\"no call was sent to Ollama\"}"
+  },
+  "playerSamples": 12,
+  "playerByIdSamples": 6,
+  "playerByIdSuccess": 6,
+  "playerListSamples": 6,
+  "playerListSuccess": 6,
+  "playerSuccess": 12,
+  "playerAvailabilityPct": 100.0,
+  "playerLatencySec": [
+    0.71,
+    0.86,
+    0.29,
+    1.21,
+    1.32,
+    1.34,
+    0.16,
+    0.04,
+    0.03,
+    0.03,
+    0.03,
+    0.03
+  ],
+  "chatBurst": 50,
+  "chatFastFailWithin2s": 50,
+  "chatFastFailPct": 100.0,
+  "connectStall": {
+    "http": 503,
+    "seconds": 2.16,
+    "finished": true,
+    "body": "{\"error\":\"Ollama call failed\",\"detail\":\"Ollama connect timed out after 500ms\"}"
+  }
+}
