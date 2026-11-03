@@ -24,12 +24,17 @@ server:
   # Stock default is 200. Pinned to 40 so the availability test can saturate the pool on a laptop.
   # The failure mode is unchanged: each in-flight LLM call on a Tomcat thread consumes one worker.
   tomcat:
+    mbeanregistry:
+      enabled: true
     threads:
       max: 40
   error:
     include-message: always
 
 management:
+  # Scrape metrics here so /actuator/prometheus still answers when all 8080 workers are busy.
+  server:
+    port: 8081
   endpoints:
     web:
       exposure:
@@ -57,19 +62,11 @@ management:
       percentiles-histogram:
         http.server.requests: true
 
-# Defaults match the stock client: one 120s timeout, call on the request thread, no retry, no breaker.
+# Baseline: chat on the Tomcat thread, ollama4j request timeout 120s.
 app:
   chat:
     stage: baseline
     ollama-base-url: http://127.0.0.1:11434
     async-enabled: false
     pool-size: 8
-    connect-timeout-ms: 0
     read-timeout-ms: 120000
-    retries: 0
-    retry-budget-ms: 0
-    backoff-initial-ms: 200
-    backoff-multiplier: 2
-    circuit-breaker-enabled: false
-    circuit-failure-threshold: 3
-    circuit-open-ms: 15000

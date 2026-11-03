@@ -1,34 +1,37 @@
 package com.app.playerservicejava.service.chat;
 
-import com.app.playerservicejava.chat.OllamaTransport;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.ollama4j.OllamaAPI;
+import io.github.ollama4j.exceptions.OllamaBaseException;
+import io.github.ollama4j.models.response.Model;
+import io.github.ollama4j.models.response.OllamaResult;
+import io.github.ollama4j.utils.Options;
+import io.github.ollama4j.types.OllamaModelType;
+import io.github.ollama4j.utils.OptionsBuilder;
+import io.github.ollama4j.utils.PromptBuilder;
 import org.springframework.stereotype.Service;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.List;
 
 @Service
 public class ChatClientService {
 
-    private final OllamaTransport ollamaTransport;
-    private final ObjectMapper objectMapper;
+    private final OllamaAPI ollamaAPI;
 
-    public ChatClientService(OllamaTransport ollamaTransport, ObjectMapper objectMapper) {
-        this.ollamaTransport = ollamaTransport;
-        this.objectMapper = objectMapper;
+    public ChatClientService(OllamaAPI ollamaAPI) {
+        this.ollamaAPI = ollamaAPI;
     }
 
-    public String listModels() {
-        return ollamaTransport.get("/api/tags");
+    public List<Model> listModels() throws OllamaBaseException, IOException, URISyntaxException, InterruptedException {
+        return ollamaAPI.listModels();
     }
 
-    public String chat() {
-        String raw = ollamaTransport.post("/api/generate",
-                "{\"model\":\"tinyllama\",\"prompt\":\"Recite a haiku about recursion.\",\"stream\":false}");
-        try {
-            JsonNode node = objectMapper.readTree(raw);
-            JsonNode text = node.get("response");
-            return text == null ? raw : text.asText();
-        } catch (Exception exc) {
-            return raw;
-        }
+    public String chat() throws OllamaBaseException, IOException, InterruptedException {
+        String model = OllamaModelType.TINYLLAMA;
+        PromptBuilder promptBuilder = new PromptBuilder().addLine("Recite a haiku about recursion.");
+        Options options = new OptionsBuilder().build();
+        OllamaResult response = ollamaAPI.generate(model, promptBuilder.build(), false, options);
+        return response.getResponse();
     }
 }

@@ -1,0 +1,2361 @@
+{
+  "stage": "timeouts",
+  "mode": {
+    "stage": "timeouts",
+    "asyncEnabled": true,
+    "poolSize": 8,
+    "readTimeoutMs": 2000,
+    "ollamaBaseUrl": "http://127.0.0.1:11434"
+  },
+  "stepSec": 5,
+  "steps": 14,
+  "chatPerStep": 6,
+  "playerPerStep": 2,
+  "durationSec": 93.8,
+  "stepSnapshots": [
+    {
+      "step": 0,
+      "elapsedSec": 1.0,
+      "launchedThisStep": 16,
+      "tomcatThreadsBusy": 2.0,
+      "tomcatThreadsCurrent": 16.0,
+      "eventsSoFar": 7
+    },
+    {
+      "step": 1,
+      "elapsedSec": 6.0,
+      "launchedThisStep": 16,
+      "tomcatThreadsBusy": 1.0,
+      "tomcatThreadsCurrent": 16.0,
+      "eventsSoFar": 23
+    },
+    {
+      "step": 2,
+      "elapsedSec": 11.0,
+      "launchedThisStep": 16,
+      "tomcatThreadsBusy": 2.0,
+      "tomcatThreadsCurrent": 16.0,
+      "eventsSoFar": 38
+    },
+    {
+      "step": 3,
+      "elapsedSec": 16.1,
+      "launchedThisStep": 16,
+      "tomcatThreadsBusy": 1.0,
+      "tomcatThreadsCurrent": 16.0,
+      "eventsSoFar": 55
+    },
+    {
+      "step": 4,
+      "elapsedSec": 21.0,
+      "launchedThisStep": 16,
+      "tomcatThreadsBusy": 2.0,
+      "tomcatThreadsCurrent": 16.0,
+      "eventsSoFar": 71
+    },
+    {
+      "step": 5,
+      "elapsedSec": 26.1,
+      "launchedThisStep": 16,
+      "tomcatThreadsBusy": 2.0,
+      "tomcatThreadsCurrent": 16.0,
+      "eventsSoFar": 86
+    },
+    {
+      "step": 6,
+      "elapsedSec": 31.1,
+      "launchedThisStep": 16,
+      "tomcatThreadsBusy": 1.0,
+      "tomcatThreadsCurrent": 16.0,
+      "eventsSoFar": 104
+    },
+    {
+      "step": 7,
+      "elapsedSec": 36.1,
+      "launchedThisStep": 16,
+      "tomcatThreadsBusy": 2.0,
+      "tomcatThreadsCurrent": 16.0,
+      "eventsSoFar": 119
+    },
+    {
+      "step": 8,
+      "elapsedSec": 41.1,
+      "launchedThisStep": 16,
+      "tomcatThreadsBusy": 1.0,
+      "tomcatThreadsCurrent": 16.0,
+      "eventsSoFar": 136
+    },
+    {
+      "step": 9,
+      "elapsedSec": 67.1,
+      "launchedThisStep": 16,
+      "tomcatThreadsBusy": 1.0,
+      "tomcatThreadsCurrent": 16.0,
+      "eventsSoFar": 151
+    },
+    {
+      "step": 10,
+      "elapsedSec": 72.1,
+      "launchedThisStep": 16,
+      "tomcatThreadsBusy": 2.0,
+      "tomcatThreadsCurrent": 16.0,
+      "eventsSoFar": 166
+    },
+    {
+      "step": 11,
+      "elapsedSec": 77.1,
+      "launchedThisStep": 16,
+      "tomcatThreadsBusy": 2.0,
+      "tomcatThreadsCurrent": 16.0,
+      "eventsSoFar": 184
+    },
+    {
+      "step": 12,
+      "elapsedSec": 82.1,
+      "launchedThisStep": 16,
+      "tomcatThreadsBusy": 1.0,
+      "tomcatThreadsCurrent": 16.0,
+      "eventsSoFar": 199
+    },
+    {
+      "step": 13,
+      "elapsedSec": 87.1,
+      "launchedThisStep": 16,
+      "tomcatThreadsBusy": 1.0,
+      "tomcatThreadsCurrent": 16.0,
+      "eventsSoFar": 215
+    }
+  ],
+  "events": [
+    {
+      "t": 1793686306.629,
+      "step": 0,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.012,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686306.63,
+      "step": 0,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.012,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686306.63,
+      "step": 0,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.015,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686306.63,
+      "step": 0,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.015,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686306.934,
+      "step": 0,
+      "api": "GET /v1/players",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.316,
+      "detail": "{\"players\":[{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthStat"
+    },
+    {
+      "t": 1793686306.934,
+      "step": 0,
+      "api": "GET /v1/players",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.316,
+      "detail": "{\"players\":[{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthStat"
+    },
+    {
+      "t": 1793686307.393,
+      "step": 0,
+      "api": "GET /v1/players/{id}",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.775,
+      "detail": "{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthState\":\"CO\",\"bir"
+    },
+    {
+      "t": 1793686308.031,
+      "step": 0,
+      "api": "GET /v1/players/{id}",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 1.413,
+      "detail": "{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthState\":\"CO\",\"bir"
+    },
+    {
+      "t": 1793686308.725,
+      "step": 0,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.109,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686308.726,
+      "step": 0,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.111,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686308.726,
+      "step": 0,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.111,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686308.726,
+      "step": 0,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.111,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686308.726,
+      "step": 0,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.11,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686308.726,
+      "step": 0,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.11,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686308.726,
+      "step": 0,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.11,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686308.727,
+      "step": 0,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.111,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686311.643,
+      "step": 1,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.014,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686311.645,
+      "step": 1,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.011,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686311.645,
+      "step": 1,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.009,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686311.645,
+      "step": 1,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.014,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686311.758,
+      "step": 1,
+      "api": "GET /v1/players",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.114,
+      "detail": "{\"players\":[{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthStat"
+    },
+    {
+      "t": 1793686311.758,
+      "step": 1,
+      "api": "GET /v1/players",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.12,
+      "detail": "{\"players\":[{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthStat"
+    },
+    {
+      "t": 1793686312.101,
+      "step": 1,
+      "api": "GET /v1/players/{id}",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.455,
+      "detail": "{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthState\":\"CO\",\"bir"
+    },
+    {
+      "t": 1793686312.822,
+      "step": 1,
+      "api": "GET /v1/players/{id}",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 1.182,
+      "detail": "{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthState\":\"CO\",\"bir"
+    },
+    {
+      "t": 1793686313.653,
+      "step": 1,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.032,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686313.653,
+      "step": 1,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.031,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686313.653,
+      "step": 1,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.032,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686313.654,
+      "step": 1,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.034,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686313.654,
+      "step": 1,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.032,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686313.655,
+      "step": 1,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.025,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686313.655,
+      "step": 1,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.034,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686313.655,
+      "step": 1,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.032,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686316.637,
+      "step": 2,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.005,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686316.637,
+      "step": 2,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.003,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686316.639,
+      "step": 2,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.003,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686316.639,
+      "step": 2,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.005,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686316.689,
+      "step": 2,
+      "api": "GET /v1/players",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.051,
+      "detail": "{\"players\":[{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthStat"
+    },
+    {
+      "t": 1793686316.689,
+      "step": 2,
+      "api": "GET /v1/players",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.05,
+      "detail": "{\"players\":[{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthStat"
+    },
+    {
+      "t": 1793686318.239,
+      "step": 2,
+      "api": "GET /v1/players/{id}",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 1.6,
+      "detail": "{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthState\":\"CO\",\"bir"
+    },
+    {
+      "t": 1793686318.27,
+      "step": 2,
+      "api": "GET /v1/players/{id}",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 1.632,
+      "detail": "{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthState\":\"CO\",\"bir"
+    },
+    {
+      "t": 1793686318.646,
+      "step": 2,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.021,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686318.647,
+      "step": 2,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.021,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686318.648,
+      "step": 2,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.024,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686318.648,
+      "step": 2,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.019,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686318.649,
+      "step": 2,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.022,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686318.649,
+      "step": 2,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.018,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686318.649,
+      "step": 2,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.016,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686318.649,
+      "step": 2,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.021,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686321.652,
+      "step": 3,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.015,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686321.654,
+      "step": 3,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.004,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686321.655,
+      "step": 3,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.003,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686321.656,
+      "step": 3,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.003,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686321.676,
+      "step": 3,
+      "api": "GET /v1/players/{id}",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.022,
+      "detail": "{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthState\":\"CO\",\"bir"
+    },
+    {
+      "t": 1793686321.687,
+      "step": 3,
+      "api": "GET /v1/players",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.033,
+      "detail": "{\"players\":[{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthStat"
+    },
+    {
+      "t": 1793686321.688,
+      "step": 3,
+      "api": "GET /v1/players",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.032,
+      "detail": "{\"players\":[{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthStat"
+    },
+    {
+      "t": 1793686323.093,
+      "step": 3,
+      "api": "GET /v1/players/{id}",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 1.436,
+      "detail": "{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthState\":\"CO\",\"bir"
+    },
+    {
+      "t": 1793686323.646,
+      "step": 3,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.017,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686323.661,
+      "step": 3,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.027,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686323.663,
+      "step": 3,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.033,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686323.665,
+      "step": 3,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.029,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686323.665,
+      "step": 3,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.036,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686323.665,
+      "step": 3,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.035,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686323.666,
+      "step": 3,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.034,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686323.666,
+      "step": 3,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.035,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686326.652,
+      "step": 4,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.008,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686326.653,
+      "step": 4,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.005,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686326.654,
+      "step": 4,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.004,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686326.654,
+      "step": 4,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.005,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686326.687,
+      "step": 4,
+      "api": "GET /v1/players",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.033,
+      "detail": "{\"players\":[{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthStat"
+    },
+    {
+      "t": 1793686326.687,
+      "step": 4,
+      "api": "GET /v1/players",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.037,
+      "detail": "{\"players\":[{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthStat"
+    },
+    {
+      "t": 1793686327.524,
+      "step": 4,
+      "api": "GET /v1/players/{id}",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.869,
+      "detail": "{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthState\":\"CO\",\"bir"
+    },
+    {
+      "t": 1793686328.098,
+      "step": 4,
+      "api": "GET /v1/players/{id}",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 1.445,
+      "detail": "{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthState\":\"CO\",\"bir"
+    },
+    {
+      "t": 1793686328.653,
+      "step": 4,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.02,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686328.654,
+      "step": 4,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.02,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686328.662,
+      "step": 4,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.026,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686328.662,
+      "step": 4,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.026,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686328.663,
+      "step": 4,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.028,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686328.663,
+      "step": 4,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.02,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686328.663,
+      "step": 4,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.018,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686328.663,
+      "step": 4,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.03,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686331.659,
+      "step": 5,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.013,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686331.66,
+      "step": 5,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.006,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686331.661,
+      "step": 5,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.007,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686331.661,
+      "step": 5,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.009,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686331.714,
+      "step": 5,
+      "api": "GET /v1/players",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.054,
+      "detail": "{\"players\":[{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthStat"
+    },
+    {
+      "t": 1793686331.714,
+      "step": 5,
+      "api": "GET /v1/players",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.059,
+      "detail": "{\"players\":[{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthStat"
+    },
+    {
+      "t": 1793686333.042,
+      "step": 5,
+      "api": "GET /v1/players/{id}",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 1.381,
+      "detail": "{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthState\":\"CO\",\"bir"
+    },
+    {
+      "t": 1793686333.577,
+      "step": 5,
+      "api": "GET /v1/players/{id}",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 1.92,
+      "detail": "{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthState\":\"CO\",\"bir"
+    },
+    {
+      "t": 1793686333.666,
+      "step": 5,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.029,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686333.668,
+      "step": 5,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.026,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686333.669,
+      "step": 5,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.025,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686333.669,
+      "step": 5,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.03,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686333.669,
+      "step": 5,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.031,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686333.67,
+      "step": 5,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.034,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686333.673,
+      "step": 5,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.035,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686333.673,
+      "step": 5,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.034,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686336.658,
+      "step": 6,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.007,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686336.661,
+      "step": 6,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.006,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686336.662,
+      "step": 6,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.009,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686336.663,
+      "step": 6,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.005,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686336.696,
+      "step": 6,
+      "api": "GET /v1/players",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.037,
+      "detail": "{\"players\":[{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthStat"
+    },
+    {
+      "t": 1793686336.696,
+      "step": 6,
+      "api": "GET /v1/players",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.034,
+      "detail": "{\"players\":[{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthStat"
+    },
+    {
+      "t": 1793686337.196,
+      "step": 6,
+      "api": "GET /v1/players/{id}",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.534,
+      "detail": "{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthState\":\"CO\",\"bir"
+    },
+    {
+      "t": 1793686337.472,
+      "step": 6,
+      "api": "GET /v1/players/{id}",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.811,
+      "detail": "{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthState\":\"CO\",\"bir"
+    },
+    {
+      "t": 1793686338.659,
+      "step": 6,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.015,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686338.662,
+      "step": 6,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.015,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686338.667,
+      "step": 6,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.021,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686338.667,
+      "step": 6,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.023,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686338.667,
+      "step": 6,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.021,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686338.667,
+      "step": 6,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.024,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686338.668,
+      "step": 6,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.023,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686338.668,
+      "step": 6,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.026,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686341.661,
+      "step": 7,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.008,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686341.662,
+      "step": 7,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.006,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686341.665,
+      "step": 7,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.008,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686341.666,
+      "step": 7,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.009,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686341.694,
+      "step": 7,
+      "api": "GET /v1/players",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.036,
+      "detail": "{\"players\":[{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthStat"
+    },
+    {
+      "t": 1793686341.696,
+      "step": 7,
+      "api": "GET /v1/players",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.035,
+      "detail": "{\"players\":[{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthStat"
+    },
+    {
+      "t": 1793686342.361,
+      "step": 7,
+      "api": "GET /v1/players/{id}",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.702,
+      "detail": "{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthState\":\"CO\",\"bir"
+    },
+    {
+      "t": 1793686343.088,
+      "step": 7,
+      "api": "GET /v1/players/{id}",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 1.426,
+      "detail": "{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthState\":\"CO\",\"bir"
+    },
+    {
+      "t": 1793686343.665,
+      "step": 7,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.021,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686343.666,
+      "step": 7,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.022,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686343.667,
+      "step": 7,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.02,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686343.668,
+      "step": 7,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.024,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686343.671,
+      "step": 7,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.026,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686343.672,
+      "step": 7,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.021,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686343.672,
+      "step": 7,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.027,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686343.672,
+      "step": 7,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.026,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686346.661,
+      "step": 8,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.005,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686346.662,
+      "step": 8,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.005,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686346.663,
+      "step": 8,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.009,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686346.664,
+      "step": 8,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.005,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686346.696,
+      "step": 8,
+      "api": "GET /v1/players",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.036,
+      "detail": "{\"players\":[{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthStat"
+    },
+    {
+      "t": 1793686346.696,
+      "step": 8,
+      "api": "GET /v1/players",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.033,
+      "detail": "{\"players\":[{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthStat"
+    },
+    {
+      "t": 1793686346.766,
+      "step": 8,
+      "api": "GET /v1/players/{id}",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.102,
+      "detail": "{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthState\":\"CO\",\"bir"
+    },
+    {
+      "t": 1793686347.332,
+      "step": 8,
+      "api": "GET /v1/players/{id}",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.671,
+      "detail": "{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthState\":\"CO\",\"bir"
+    },
+    {
+      "t": 1793686348.661,
+      "step": 8,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.014,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686348.662,
+      "step": 8,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.017,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686348.665,
+      "step": 8,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.021,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686348.666,
+      "step": 8,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.013,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686348.666,
+      "step": 8,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.013,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686348.667,
+      "step": 8,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.016,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686348.667,
+      "step": 8,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.021,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686348.67,
+      "step": 8,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.025,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686372.71,
+      "step": 9,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.005,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686372.71,
+      "step": 9,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.008,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686372.71,
+      "step": 9,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.007,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686372.711,
+      "step": 9,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.007,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686372.748,
+      "step": 9,
+      "api": "GET /v1/players",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.043,
+      "detail": "{\"players\":[{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthStat"
+    },
+    {
+      "t": 1793686372.748,
+      "step": 9,
+      "api": "GET /v1/players",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.038,
+      "detail": "{\"players\":[{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthStat"
+    },
+    {
+      "t": 1793686373.21,
+      "step": 9,
+      "api": "GET /v1/players/{id}",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.499,
+      "detail": "{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthState\":\"CO\",\"bir"
+    },
+    {
+      "t": 1793686373.938,
+      "step": 9,
+      "api": "GET /v1/players/{id}",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 1.231,
+      "detail": "{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthState\":\"CO\",\"bir"
+    },
+    {
+      "t": 1793686374.713,
+      "step": 9,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.028,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686374.717,
+      "step": 9,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.029,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686374.722,
+      "step": 9,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.034,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686374.723,
+      "step": 9,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.035,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686374.723,
+      "step": 9,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.03,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686374.724,
+      "step": 9,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.022,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686374.724,
+      "step": 9,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.024,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686374.724,
+      "step": 9,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.028,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686377.713,
+      "step": 10,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.008,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686377.714,
+      "step": 10,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.004,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686377.716,
+      "step": 10,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.004,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686377.716,
+      "step": 10,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.005,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686377.747,
+      "step": 10,
+      "api": "GET /v1/players",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.034,
+      "detail": "{\"players\":[{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthStat"
+    },
+    {
+      "t": 1793686377.747,
+      "step": 10,
+      "api": "GET /v1/players",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.032,
+      "detail": "{\"players\":[{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthStat"
+    },
+    {
+      "t": 1793686379.029,
+      "step": 10,
+      "api": "GET /v1/players/{id}",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 1.315,
+      "detail": "{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthState\":\"CO\",\"bir"
+    },
+    {
+      "t": 1793686379.361,
+      "step": 10,
+      "api": "GET /v1/players/{id}",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 1.645,
+      "detail": "{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthState\":\"CO\",\"bir"
+    },
+    {
+      "t": 1793686379.711,
+      "step": 10,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.021,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686379.711,
+      "step": 10,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.018,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686379.719,
+      "step": 10,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.024,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686379.72,
+      "step": 10,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.018,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686379.72,
+      "step": 10,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.028,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686379.72,
+      "step": 10,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.017,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686379.72,
+      "step": 10,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.024,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686379.72,
+      "step": 10,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.027,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686382.713,
+      "step": 11,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.005,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686382.714,
+      "step": 11,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.004,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686382.714,
+      "step": 11,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.004,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686382.716,
+      "step": 11,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.005,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686382.745,
+      "step": 11,
+      "api": "GET /v1/players",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.034,
+      "detail": "{\"players\":[{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthStat"
+    },
+    {
+      "t": 1793686382.745,
+      "step": 11,
+      "api": "GET /v1/players",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.032,
+      "detail": "{\"players\":[{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthStat"
+    },
+    {
+      "t": 1793686383.407,
+      "step": 11,
+      "api": "GET /v1/players/{id}",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.695,
+      "detail": "{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthState\":\"CO\",\"bir"
+    },
+    {
+      "t": 1793686383.61,
+      "step": 11,
+      "api": "GET /v1/players/{id}",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.894,
+      "detail": "{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthState\":\"CO\",\"bir"
+    },
+    {
+      "t": 1793686384.714,
+      "step": 11,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.021,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686384.718,
+      "step": 11,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.024,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686384.719,
+      "step": 11,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.025,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686384.719,
+      "step": 11,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.018,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686384.721,
+      "step": 11,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.025,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686384.721,
+      "step": 11,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.026,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686384.721,
+      "step": 11,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.018,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686384.721,
+      "step": 11,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.014,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686387.718,
+      "step": 12,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.003,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686387.719,
+      "step": 12,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.005,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686387.721,
+      "step": 12,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.005,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686387.722,
+      "step": 12,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.003,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686387.742,
+      "step": 12,
+      "api": "GET /v1/players/{id}",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.02,
+      "detail": "{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthState\":\"CO\",\"bir"
+    },
+    {
+      "t": 1793686387.753,
+      "step": 12,
+      "api": "GET /v1/players",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.033,
+      "detail": "{\"players\":[{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthStat"
+    },
+    {
+      "t": 1793686387.753,
+      "step": 12,
+      "api": "GET /v1/players",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.032,
+      "detail": "{\"players\":[{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthStat"
+    },
+    {
+      "t": 1793686388.925,
+      "step": 12,
+      "api": "GET /v1/players/{id}",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 1.204,
+      "detail": "{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthState\":\"CO\",\"bir"
+    },
+    {
+      "t": 1793686389.728,
+      "step": 12,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.029,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686389.73,
+      "step": 12,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.033,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686389.73,
+      "step": 12,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.017,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686389.73,
+      "step": 12,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.029,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686389.731,
+      "step": 12,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.025,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686389.731,
+      "step": 12,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.029,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686389.731,
+      "step": 12,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.021,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686389.731,
+      "step": 12,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.033,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686392.726,
+      "step": 13,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.004,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686392.727,
+      "step": 13,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.005,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686392.727,
+      "step": 13,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.003,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686392.727,
+      "step": 13,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 0.003,
+      "detail": "{\"error\":\"Chat worker pool is full\",\"detail\":\"rejected\"}"
+    },
+    {
+      "t": 1793686392.758,
+      "step": 13,
+      "api": "GET /v1/players",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.031,
+      "detail": "{\"players\":[{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthStat"
+    },
+    {
+      "t": 1793686392.758,
+      "step": 13,
+      "api": "GET /v1/players",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.033,
+      "detail": "{\"players\":[{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthStat"
+    },
+    {
+      "t": 1793686393.088,
+      "step": 13,
+      "api": "GET /v1/players/{id}",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.362,
+      "detail": "{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthState\":\"CO\",\"bir"
+    },
+    {
+      "t": 1793686394.363,
+      "step": 13,
+      "api": "GET /v1/players/{id}",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 1.635,
+      "detail": "{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthState\":\"CO\",\"bir"
+    },
+    {
+      "t": 1793686394.719,
+      "step": 13,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.018,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686394.724,
+      "step": 13,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.021,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686394.726,
+      "step": 13,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.021,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686394.726,
+      "step": 13,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.023,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686394.727,
+      "step": 13,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.016,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686394.727,
+      "step": 13,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.023,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686394.727,
+      "step": 13,
+      "api": "GET /v1/chat/list-models",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.014,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    },
+    {
+      "t": 1793686394.727,
+      "step": 13,
+      "api": "POST /v1/chat",
+      "http": 503,
+      "outcome": "http_503",
+      "seconds": 2.007,
+      "detail": "{\"error\":\"Ollama call timed out\",\"detail\":\"request timed out\"}"
+    }
+  ],
+  "summary": {
+    "byStep": {
+      "0": {
+        "POST /v1/chat": {
+          "http_503": 6
+        },
+        "GET /v1/chat/list-models": {
+          "http_503": 6
+        },
+        "GET /v1/players": {
+          "http_200": 2
+        },
+        "GET /v1/players/{id}": {
+          "http_200": 2
+        }
+      },
+      "1": {
+        "POST /v1/chat": {
+          "http_503": 6
+        },
+        "GET /v1/chat/list-models": {
+          "http_503": 6
+        },
+        "GET /v1/players": {
+          "http_200": 2
+        },
+        "GET /v1/players/{id}": {
+          "http_200": 2
+        }
+      },
+      "2": {
+        "POST /v1/chat": {
+          "http_503": 6
+        },
+        "GET /v1/chat/list-models": {
+          "http_503": 6
+        },
+        "GET /v1/players": {
+          "http_200": 2
+        },
+        "GET /v1/players/{id}": {
+          "http_200": 2
+        }
+      },
+      "3": {
+        "GET /v1/chat/list-models": {
+          "http_503": 6
+        },
+        "POST /v1/chat": {
+          "http_503": 6
+        },
+        "GET /v1/players/{id}": {
+          "http_200": 2
+        },
+        "GET /v1/players": {
+          "http_200": 2
+        }
+      },
+      "4": {
+        "POST /v1/chat": {
+          "http_503": 6
+        },
+        "GET /v1/chat/list-models": {
+          "http_503": 6
+        },
+        "GET /v1/players": {
+          "http_200": 2
+        },
+        "GET /v1/players/{id}": {
+          "http_200": 2
+        }
+      },
+      "5": {
+        "GET /v1/chat/list-models": {
+          "http_503": 6
+        },
+        "POST /v1/chat": {
+          "http_503": 6
+        },
+        "GET /v1/players": {
+          "http_200": 2
+        },
+        "GET /v1/players/{id}": {
+          "http_200": 2
+        }
+      },
+      "6": {
+        "GET /v1/chat/list-models": {
+          "http_503": 6
+        },
+        "POST /v1/chat": {
+          "http_503": 6
+        },
+        "GET /v1/players": {
+          "http_200": 2
+        },
+        "GET /v1/players/{id}": {
+          "http_200": 2
+        }
+      },
+      "7": {
+        "GET /v1/chat/list-models": {
+          "http_503": 6
+        },
+        "POST /v1/chat": {
+          "http_503": 6
+        },
+        "GET /v1/players": {
+          "http_200": 2
+        },
+        "GET /v1/players/{id}": {
+          "http_200": 2
+        }
+      },
+      "8": {
+        "POST /v1/chat": {
+          "http_503": 6
+        },
+        "GET /v1/chat/list-models": {
+          "http_503": 6
+        },
+        "GET /v1/players": {
+          "http_200": 2
+        },
+        "GET /v1/players/{id}": {
+          "http_200": 2
+        }
+      },
+      "9": {
+        "POST /v1/chat": {
+          "http_503": 6
+        },
+        "GET /v1/chat/list-models": {
+          "http_503": 6
+        },
+        "GET /v1/players": {
+          "http_200": 2
+        },
+        "GET /v1/players/{id}": {
+          "http_200": 2
+        }
+      },
+      "10": {
+        "GET /v1/chat/list-models": {
+          "http_503": 6
+        },
+        "POST /v1/chat": {
+          "http_503": 6
+        },
+        "GET /v1/players": {
+          "http_200": 2
+        },
+        "GET /v1/players/{id}": {
+          "http_200": 2
+        }
+      },
+      "11": {
+        "GET /v1/chat/list-models": {
+          "http_503": 6
+        },
+        "POST /v1/chat": {
+          "http_503": 6
+        },
+        "GET /v1/players": {
+          "http_200": 2
+        },
+        "GET /v1/players/{id}": {
+          "http_200": 2
+        }
+      },
+      "12": {
+        "POST /v1/chat": {
+          "http_503": 6
+        },
+        "GET /v1/chat/list-models": {
+          "http_503": 6
+        },
+        "GET /v1/players/{id}": {
+          "http_200": 2
+        },
+        "GET /v1/players": {
+          "http_200": 2
+        }
+      },
+      "13": {
+        "POST /v1/chat": {
+          "http_503": 6
+        },
+        "GET /v1/chat/list-models": {
+          "http_503": 6
+        },
+        "GET /v1/players": {
+          "http_200": 2
+        },
+        "GET /v1/players/{id}": {
+          "http_200": 2
+        }
+      }
+    },
+    "totalsByApi": {
+      "POST /v1/chat": {
+        "http_503": 84
+      },
+      "GET /v1/chat/list-models": {
+        "http_503": 84
+      },
+      "GET /v1/players": {
+        "http_200": 28
+      },
+      "GET /v1/players/{id}": {
+        "http_200": 28
+      }
+    }
+  }
+}

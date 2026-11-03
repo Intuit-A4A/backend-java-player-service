@@ -6,7 +6,7 @@
   ],
   "timezone": "browser",
   "schemaVersion": 39,
-  "version": 1,
+  "version": 3,
   "refresh": "5s",
   "time": {
     "from": "now-15m",
@@ -16,7 +16,7 @@
     {
       "id": 1,
       "type": "row",
-      "title": "GET /v1/players",
+      "title": "Tomcat",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -29,119 +29,97 @@
     {
       "id": 2,
       "type": "timeseries",
-      "title": "Requests",
+      "title": "Tomcat busy threads (workers serving a request)",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
       },
       "gridPos": {
         "h": 7,
-        "w": 8,
+        "w": 24,
         "x": 0,
         "y": 1
       },
       "fieldConfig": {
         "defaults": {
-          "unit": "reqps",
+          "unit": "short",
           "min": 0,
           "custom": {
             "drawStyle": "line",
             "lineWidth": 2,
-            "fillOpacity": 15,
-            "spanNulls": false,
-            "showPoints": "never"
+            "fillOpacity": 10,
+            "spanNulls": false
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "max configured" },
+            "properties": [
+              { "id": "custom.lineStyle", "value": { "dash": [10, 10], "fill": "dash" } },
+              { "id": "color", "value": { "fixedColor": "orange", "mode": "fixed" } }
+            ]
+          }
+        ]
       },
       "options": {
         "legend": {
           "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": false
+          "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "multi"
         }
       },
       "targets": [
         {
           "refId": "A",
-          "expr": "sum(rate(http_server_requests_seconds_count{uri=\"/v1/players\",method=\"GET\"}[$__rate_interval])) or vector(0)",
-          "legendFormat": "Requests"
-        }
-      ]
-    },
-    {
-      "id": 3,
-      "type": "timeseries",
-      "title": "Latency p95",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 8,
-        "x": 8,
-        "y": 1
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "s",
-          "min": 0,
-          "custom": {
-            "drawStyle": "line",
-            "lineWidth": 2,
-            "fillOpacity": 15,
-            "spanNulls": false,
-            "showPoints": "never"
-          }
+          "expr": "tomcat_threads_busy_threads",
+          "legendFormat": "busy"
         },
-        "overrides": []
-      },
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": false
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "targets": [
         {
-          "refId": "A",
-          "expr": "histogram_quantile(0.95, sum by (le) (rate(http_server_requests_seconds_bucket{uri=\"/v1/players\",method=\"GET\"}[$__rate_interval])))",
-          "legendFormat": "Latency p95"
+          "refId": "B",
+          "expr": "tomcat_threads_config_max_threads",
+          "legendFormat": "max configured"
         }
       ]
     },
     {
       "id": 4,
+      "type": "row",
+      "title": "GET /v1/players",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 9
+      },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "id": 5,
       "type": "timeseries",
-      "title": "5xx",
+      "title": "Completed requests (count in interval)",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
       },
       "gridPos": {
         "h": 7,
-        "w": 8,
-        "x": 16,
-        "y": 1
+        "w": 24,
+        "x": 0,
+        "y": 10
       },
       "fieldConfig": {
         "defaults": {
-          "unit": "reqps",
+          "unit": "short",
           "min": 0,
           "custom": {
-            "drawStyle": "line",
-            "lineWidth": 2,
-            "fillOpacity": 15,
-            "spanNulls": false,
-            "showPoints": "never"
+            "drawStyle": "bars",
+            "fillOpacity": 80,
+            "stacking": {
+              "mode": "normal"
+            }
           }
         },
         "overrides": []
@@ -149,104 +127,72 @@
       "options": {
         "legend": {
           "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": false
+          "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "multi"
         }
       },
       "targets": [
         {
           "refId": "A",
-          "expr": "sum(rate(http_server_requests_seconds_count{uri=\"/v1/players\",method=\"GET\",status=~\"5..\"}[$__rate_interval])) or vector(0)",
-          "legendFormat": "5xx"
+          "expr": "sum(increase(http_server_requests_seconds_count{uri=\"/v1/players\",method=\"GET\",status=\"200\"}[$__rate_interval])) or vector(0)",
+          "legendFormat": "200"
+        },
+        {
+          "refId": "B",
+          "expr": "sum(increase(http_server_requests_seconds_count{uri=\"/v1/players\",method=\"GET\",status=\"503\"}[$__rate_interval])) or vector(0)",
+          "legendFormat": "503"
+        },
+        {
+          "refId": "C",
+          "expr": "sum(increase(http_server_requests_seconds_count{uri=\"/v1/players\",method=\"GET\",status=\"500\"}[$__rate_interval])) or vector(0)",
+          "legendFormat": "500"
+        },
+        {
+          "refId": "D",
+          "expr": "sum(increase(http_server_requests_seconds_count{uri=\"/v1/players\",method=\"GET\",status=\"502\"}[$__rate_interval])) + sum(increase(http_server_requests_seconds_count{uri=\"/v1/players\",method=\"GET\",status=\"504\"}[$__rate_interval])) or vector(0)",
+          "legendFormat": "other 5xx"
         }
       ]
     },
     {
-      "id": 5,
+      "id": 6,
       "type": "row",
       "title": "GET /v1/players/{id}",
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 8
+        "y": 18
       },
       "collapsed": false,
       "panels": []
     },
     {
-      "id": 6,
-      "type": "timeseries",
-      "title": "Requests",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 8,
-        "x": 0,
-        "y": 9
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "reqps",
-          "min": 0,
-          "custom": {
-            "drawStyle": "line",
-            "lineWidth": 2,
-            "fillOpacity": 15,
-            "spanNulls": false,
-            "showPoints": "never"
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": false
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "expr": "sum(rate(http_server_requests_seconds_count{uri=\"/v1/players/{id}\",method=\"GET\"}[$__rate_interval])) or vector(0)",
-          "legendFormat": "Requests"
-        }
-      ]
-    },
-    {
       "id": 7,
       "type": "timeseries",
-      "title": "Latency p95",
+      "title": "Completed requests (count in interval)",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
       },
       "gridPos": {
         "h": 7,
-        "w": 8,
-        "x": 8,
-        "y": 9
+        "w": 24,
+        "x": 0,
+        "y": 19
       },
       "fieldConfig": {
         "defaults": {
-          "unit": "s",
+          "unit": "short",
           "min": 0,
           "custom": {
-            "drawStyle": "line",
-            "lineWidth": 2,
-            "fillOpacity": 15,
-            "spanNulls": false,
-            "showPoints": "never"
+            "drawStyle": "bars",
+            "fillOpacity": 80,
+            "stacking": {
+              "mode": "normal"
+            }
           }
         },
         "overrides": []
@@ -254,104 +200,72 @@
       "options": {
         "legend": {
           "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": false
+          "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "multi"
         }
       },
       "targets": [
         {
           "refId": "A",
-          "expr": "histogram_quantile(0.95, sum by (le) (rate(http_server_requests_seconds_bucket{uri=\"/v1/players/{id}\",method=\"GET\"}[$__rate_interval])))",
-          "legendFormat": "Latency p95"
+          "expr": "sum(increase(http_server_requests_seconds_count{uri=\"/v1/players/{id}\",method=\"GET\",status=\"200\"}[$__rate_interval])) or vector(0)",
+          "legendFormat": "200"
+        },
+        {
+          "refId": "B",
+          "expr": "sum(increase(http_server_requests_seconds_count{uri=\"/v1/players/{id}\",method=\"GET\",status=\"503\"}[$__rate_interval])) or vector(0)",
+          "legendFormat": "503"
+        },
+        {
+          "refId": "C",
+          "expr": "sum(increase(http_server_requests_seconds_count{uri=\"/v1/players/{id}\",method=\"GET\",status=\"500\"}[$__rate_interval])) or vector(0)",
+          "legendFormat": "500"
+        },
+        {
+          "refId": "D",
+          "expr": "sum(increase(http_server_requests_seconds_count{uri=\"/v1/players/{id}\",method=\"GET\",status=\"502\"}[$__rate_interval])) + sum(increase(http_server_requests_seconds_count{uri=\"/v1/players/{id}\",method=\"GET\",status=\"504\"}[$__rate_interval])) or vector(0)",
+          "legendFormat": "other 5xx"
         }
       ]
     },
     {
       "id": 8,
-      "type": "timeseries",
-      "title": "5xx",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 8,
-        "x": 16,
-        "y": 9
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "reqps",
-          "min": 0,
-          "custom": {
-            "drawStyle": "line",
-            "lineWidth": 2,
-            "fillOpacity": 15,
-            "spanNulls": false,
-            "showPoints": "never"
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": false
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "expr": "sum(rate(http_server_requests_seconds_count{uri=\"/v1/players/{id}\",method=\"GET\",status=~\"5..\"}[$__rate_interval])) or vector(0)",
-          "legendFormat": "5xx"
-        }
-      ]
-    },
-    {
-      "id": 9,
       "type": "row",
       "title": "GET /v1/chat/list-models",
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 16
+        "y": 27
       },
       "collapsed": false,
       "panels": []
     },
     {
-      "id": 10,
+      "id": 9,
       "type": "timeseries",
-      "title": "Requests",
+      "title": "Completed requests (count in interval)",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
       },
       "gridPos": {
         "h": 7,
-        "w": 8,
+        "w": 24,
         "x": 0,
-        "y": 17
+        "y": 28
       },
       "fieldConfig": {
         "defaults": {
-          "unit": "reqps",
+          "unit": "short",
           "min": 0,
           "custom": {
-            "drawStyle": "line",
-            "lineWidth": 2,
-            "fillOpacity": 15,
-            "spanNulls": false,
-            "showPoints": "never"
+            "drawStyle": "bars",
+            "fillOpacity": 80,
+            "stacking": {
+              "mode": "normal"
+            }
           }
         },
         "overrides": []
@@ -359,150 +273,72 @@
       "options": {
         "legend": {
           "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": false
+          "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "multi"
         }
       },
       "targets": [
         {
           "refId": "A",
-          "expr": "sum(rate(http_server_requests_seconds_count{uri=\"/v1/chat/list-models\",method=\"GET\"}[$__rate_interval])) or vector(0)",
-          "legendFormat": "Requests"
-        }
-      ]
-    },
-    {
-      "id": 11,
-      "type": "timeseries",
-      "title": "Latency p95",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 8,
-        "x": 8,
-        "y": 17
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "s",
-          "min": 0,
-          "custom": {
-            "drawStyle": "line",
-            "lineWidth": 2,
-            "fillOpacity": 15,
-            "spanNulls": false,
-            "showPoints": "never"
-          }
+          "expr": "sum(increase(http_server_requests_seconds_count{uri=\"/v1/chat/list-models\",method=\"GET\",status=\"200\"}[$__rate_interval])) or vector(0)",
+          "legendFormat": "200"
         },
-        "overrides": []
-      },
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": false
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "targets": [
         {
-          "refId": "A",
-          "expr": "histogram_quantile(0.95, sum by (le) (rate(http_server_requests_seconds_bucket{uri=\"/v1/chat/list-models\",method=\"GET\"}[$__rate_interval])))",
-          "legendFormat": "Latency p95"
-        }
-      ]
-    },
-    {
-      "id": 12,
-      "type": "timeseries",
-      "title": "5xx",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 8,
-        "x": 16,
-        "y": 17
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "reqps",
-          "min": 0,
-          "custom": {
-            "drawStyle": "line",
-            "lineWidth": 2,
-            "fillOpacity": 15,
-            "spanNulls": false,
-            "showPoints": "never"
-          }
+          "refId": "B",
+          "expr": "sum(increase(http_server_requests_seconds_count{uri=\"/v1/chat/list-models\",method=\"GET\",status=\"503\"}[$__rate_interval])) or vector(0)",
+          "legendFormat": "503"
         },
-        "overrides": []
-      },
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": false
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "targets": [
         {
-          "refId": "A",
-          "expr": "sum(rate(http_server_requests_seconds_count{uri=\"/v1/chat/list-models\",method=\"GET\",status=~\"5..\"}[$__rate_interval])) or vector(0)",
-          "legendFormat": "5xx"
+          "refId": "C",
+          "expr": "sum(increase(http_server_requests_seconds_count{uri=\"/v1/chat/list-models\",method=\"GET\",status=\"500\"}[$__rate_interval])) or vector(0)",
+          "legendFormat": "500"
+        },
+        {
+          "refId": "D",
+          "expr": "sum(increase(http_server_requests_seconds_count{uri=\"/v1/chat/list-models\",method=\"GET\",status=\"502\"}[$__rate_interval])) + sum(increase(http_server_requests_seconds_count{uri=\"/v1/chat/list-models\",method=\"GET\",status=\"504\"}[$__rate_interval])) or vector(0)",
+          "legendFormat": "other 5xx"
         }
       ]
     },
     {
-      "id": 13,
+      "id": 10,
       "type": "row",
       "title": "POST /v1/chat",
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 24
+        "y": 36
       },
       "collapsed": false,
       "panels": []
     },
     {
-      "id": 14,
+      "id": 11,
       "type": "timeseries",
-      "title": "Requests",
+      "title": "Completed requests (count in interval)",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
       },
       "gridPos": {
         "h": 7,
-        "w": 8,
+        "w": 24,
         "x": 0,
-        "y": 25
+        "y": 37
       },
       "fieldConfig": {
         "defaults": {
-          "unit": "reqps",
+          "unit": "short",
           "min": 0,
           "custom": {
-            "drawStyle": "line",
-            "lineWidth": 2,
-            "fillOpacity": 15,
-            "spanNulls": false,
-            "showPoints": "never"
+            "drawStyle": "bars",
+            "fillOpacity": 80,
+            "stacking": {
+              "mode": "normal"
+            }
           }
         },
         "overrides": []
@@ -510,110 +346,32 @@
       "options": {
         "legend": {
           "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": false
+          "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "multi"
         }
       },
       "targets": [
         {
           "refId": "A",
-          "expr": "sum(rate(http_server_requests_seconds_count{uri=\"/v1/chat\",method=\"POST\"}[$__rate_interval])) or vector(0)",
-          "legendFormat": "Requests"
-        }
-      ]
-    },
-    {
-      "id": 15,
-      "type": "timeseries",
-      "title": "Latency p95",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 8,
-        "x": 8,
-        "y": 25
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "s",
-          "min": 0,
-          "custom": {
-            "drawStyle": "line",
-            "lineWidth": 2,
-            "fillOpacity": 15,
-            "spanNulls": false,
-            "showPoints": "never"
-          }
+          "expr": "sum(increase(http_server_requests_seconds_count{uri=\"/v1/chat\",method=\"POST\",status=\"200\"}[$__rate_interval])) or vector(0)",
+          "legendFormat": "200"
         },
-        "overrides": []
-      },
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": false
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "targets": [
         {
-          "refId": "A",
-          "expr": "histogram_quantile(0.95, sum by (le) (rate(http_server_requests_seconds_bucket{uri=\"/v1/chat\",method=\"POST\"}[$__rate_interval])))",
-          "legendFormat": "Latency p95"
-        }
-      ]
-    },
-    {
-      "id": 16,
-      "type": "timeseries",
-      "title": "5xx",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 8,
-        "x": 16,
-        "y": 25
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "reqps",
-          "min": 0,
-          "custom": {
-            "drawStyle": "line",
-            "lineWidth": 2,
-            "fillOpacity": 15,
-            "spanNulls": false,
-            "showPoints": "never"
-          }
+          "refId": "B",
+          "expr": "sum(increase(http_server_requests_seconds_count{uri=\"/v1/chat\",method=\"POST\",status=\"503\"}[$__rate_interval])) or vector(0)",
+          "legendFormat": "503"
         },
-        "overrides": []
-      },
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": false
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "targets": [
         {
-          "refId": "A",
-          "expr": "sum(rate(http_server_requests_seconds_count{uri=\"/v1/chat\",method=\"POST\",status=~\"5..\"}[$__rate_interval])) or vector(0)",
-          "legendFormat": "5xx"
+          "refId": "C",
+          "expr": "sum(increase(http_server_requests_seconds_count{uri=\"/v1/chat\",method=\"POST\",status=\"500\"}[$__rate_interval])) or vector(0)",
+          "legendFormat": "500"
+        },
+        {
+          "refId": "D",
+          "expr": "sum(increase(http_server_requests_seconds_count{uri=\"/v1/chat\",method=\"POST\",status=\"502\"}[$__rate_interval])) + sum(increase(http_server_requests_seconds_count{uri=\"/v1/chat\",method=\"POST\",status=\"504\"}[$__rate_interval])) or vector(0)",
+          "legendFormat": "other 5xx"
         }
       ]
     }

@@ -1,7 +1,6 @@
-# 3.2 — separate connect timeout from read timeout. Read stays at the stock 120s.
+# Hardened demo profile: chat off Tomcat + shorter ollama4j request timeout.
 app:
   chat:
     stage: timeouts
     async-enabled: true
-    connect-timeout-ms: 2000
-    read-timeout-ms: 120000
+    read-timeout-ms: 2000

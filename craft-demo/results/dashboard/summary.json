@@ -1,0 +1,44 @@
+{
+  "baseline": {
+    "totalsByApi": {
+      "GET /v1/players": {
+        "http_200": 6,
+        "client_timeout": 22
+      },
+      "GET /v1/players/{id}": {
+        "http_200": 6,
+        "client_timeout": 22
+      },
+      "GET /v1/chat/list-models": {
+        "client_timeout": 78,
+        "no_http_response": 6
+      },
+      "POST /v1/chat": {
+        "client_timeout": 78,
+        "no_http_response": 6
+      }
+    },
+    "peakTomcatBusy": 40.0,
+    "peakStep": 3,
+    "durationSec": 93.8
+  },
+  "timeouts": {
+    "totalsByApi": {
+      "POST /v1/chat": {
+        "http_503": 84
+      },
+      "GET /v1/chat/list-models": {
+        "http_503": 84
+      },
+      "GET /v1/players": {
+        "http_200": 28
+      },
+      "GET /v1/players/{id}": {
+        "http_200": 28
+      }
+    },
+    "peakTomcatBusy": 2.0,
+    "peakStep": 0,
+    "durationSec": 93.8
+  }
+}

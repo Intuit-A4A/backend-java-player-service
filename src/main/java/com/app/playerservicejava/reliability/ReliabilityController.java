@@ -1,6 +1,5 @@
 package com.app.playerservicejava.reliability;
 
-import com.app.playerservicejava.chat.ChatCircuitBreaker;
 import com.app.playerservicejava.chat.ChatResilienceProperties;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,14 +17,10 @@ public class ReliabilityController {
 
     private final SliTracker sliTracker;
     private final ChatResilienceProperties chat;
-    private final ChatCircuitBreaker circuitBreaker;
 
-    public ReliabilityController(SliTracker sliTracker,
-                                 ChatResilienceProperties chat,
-                                 ChatCircuitBreaker circuitBreaker) {
+    public ReliabilityController(SliTracker sliTracker, ChatResilienceProperties chat) {
         this.sliTracker = sliTracker;
         this.chat = chat;
-        this.circuitBreaker = circuitBreaker;
     }
 
     @GetMapping("/mode")
@@ -34,14 +29,8 @@ public class ReliabilityController {
         mode.put("stage", chat.getStage());
         mode.put("asyncEnabled", chat.isAsyncEnabled());
         mode.put("poolSize", chat.getPoolSize());
-        mode.put("connectTimeoutMs", chat.getConnectTimeoutMs());
         mode.put("readTimeoutMs", chat.getReadTimeoutMs());
-        mode.put("retries", chat.getRetries());
-        mode.put("retryBudgetMs", chat.getRetryBudgetMs());
-        mode.put("backoffInitialMs", chat.getBackoffInitialMs());
-        mode.put("backoffMultiplier", chat.getBackoffMultiplier());
-        mode.put("circuitBreakerEnabled", chat.isCircuitBreakerEnabled());
-        mode.put("circuitState", circuitBreaker.state().name());
+        mode.put("ollamaBaseUrl", chat.getOllamaBaseUrl());
         return mode;
     }
 

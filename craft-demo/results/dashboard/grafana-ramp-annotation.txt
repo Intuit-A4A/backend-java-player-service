@@ -1,0 +1,8 @@
+Run 1 baseline (chat on Tomcat, hang on :11434)
+  Player calls: 56 (28 list + 28 by-id) → 12 HTTP 200, rest client_timeout
+  Tomcat busy peaked at 39.0 (max pool 40)
+Run 2 timeouts (chat async, 2s connect, same hang)
+  Player calls: 56 (same count) → 56 HTTP 200
+  Chat mostly HTTP 503 (pool full); Tomcat stays low
+Busy = workers actively serving a request (saturation signal).
+Same player attempt count; more 200 ⇒ availability improves.

@@ -1,0 +1,2365 @@
+{
+  "stage": "baseline",
+  "mode": {
+    "stage": "baseline",
+    "asyncEnabled": false,
+    "poolSize": 8,
+    "readTimeoutMs": 120000,
+    "ollamaBaseUrl": "http://127.0.0.1:11434"
+  },
+  "stepSec": 5,
+  "steps": 14,
+  "chatPerStep": 6,
+  "playerPerStep": 2,
+  "durationSec": 93.8,
+  "stepSnapshots": [
+    {
+      "step": 0,
+      "elapsedSec": 1.0,
+      "launchedThisStep": 16,
+      "tomcatThreadsBusy": 14.0,
+      "tomcatThreadsCurrent": 16.0,
+      "eventsSoFar": 3
+    },
+    {
+      "step": 1,
+      "elapsedSec": 6.0,
+      "launchedThisStep": 16,
+      "tomcatThreadsBusy": 26.0,
+      "tomcatThreadsCurrent": 28.0,
+      "eventsSoFar": 6
+    },
+    {
+      "step": 2,
+      "elapsedSec": 11.0,
+      "launchedThisStep": 16,
+      "tomcatThreadsBusy": 38.0,
+      "tomcatThreadsCurrent": 40.0,
+      "eventsSoFar": 10
+    },
+    {
+      "step": 3,
+      "elapsedSec": 16.0,
+      "launchedThisStep": 16,
+      "tomcatThreadsBusy": 40.0,
+      "tomcatThreadsCurrent": 40.0,
+      "eventsSoFar": 24
+    },
+    {
+      "step": 4,
+      "elapsedSec": 21.0,
+      "launchedThisStep": 16,
+      "tomcatThreadsBusy": 40.0,
+      "tomcatThreadsCurrent": 40.0,
+      "eventsSoFar": 40
+    },
+    {
+      "step": 5,
+      "elapsedSec": 26.0,
+      "launchedThisStep": 16,
+      "tomcatThreadsBusy": 40.0,
+      "tomcatThreadsCurrent": 40.0,
+      "eventsSoFar": 56
+    },
+    {
+      "step": 6,
+      "elapsedSec": 31.0,
+      "launchedThisStep": 16,
+      "tomcatThreadsBusy": 40.0,
+      "tomcatThreadsCurrent": 40.0,
+      "eventsSoFar": 72
+    },
+    {
+      "step": 7,
+      "elapsedSec": 36.1,
+      "launchedThisStep": 16,
+      "tomcatThreadsBusy": 40.0,
+      "tomcatThreadsCurrent": 40.0,
+      "eventsSoFar": 88
+    },
+    {
+      "step": 8,
+      "elapsedSec": 41.1,
+      "launchedThisStep": 16,
+      "tomcatThreadsBusy": 40.0,
+      "tomcatThreadsCurrent": 40.0,
+      "eventsSoFar": 104
+    },
+    {
+      "step": 9,
+      "elapsedSec": 67.1,
+      "launchedThisStep": 16,
+      "tomcatThreadsBusy": 40.0,
+      "tomcatThreadsCurrent": 40.0,
+      "eventsSoFar": 144
+    },
+    {
+      "step": 10,
+      "elapsedSec": 72.1,
+      "launchedThisStep": 16,
+      "tomcatThreadsBusy": 40.0,
+      "tomcatThreadsCurrent": 40.0,
+      "eventsSoFar": 148
+    },
+    {
+      "step": 11,
+      "elapsedSec": 77.1,
+      "launchedThisStep": 16,
+      "tomcatThreadsBusy": 40.0,
+      "tomcatThreadsCurrent": 40.0,
+      "eventsSoFar": 152
+    },
+    {
+      "step": 12,
+      "elapsedSec": 82.1,
+      "launchedThisStep": 16,
+      "tomcatThreadsBusy": 40.0,
+      "tomcatThreadsCurrent": 40.0,
+      "eventsSoFar": 168
+    },
+    {
+      "step": 13,
+      "elapsedSec": 87.1,
+      "launchedThisStep": 16,
+      "tomcatThreadsBusy": 40.0,
+      "tomcatThreadsCurrent": 40.0,
+      "eventsSoFar": 184
+    }
+  ],
+  "events": [
+    {
+      "t": 1793686209.002,
+      "step": 0,
+      "api": "GET /v1/players",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.323,
+      "detail": "{\"players\":[{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthStat"
+    },
+    {
+      "t": 1793686209.002,
+      "step": 0,
+      "api": "GET /v1/players",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.323,
+      "detail": "{\"players\":[{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthStat"
+    },
+    {
+      "t": 1793686209.296,
+      "step": 0,
+      "api": "GET /v1/players/{id}",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.616,
+      "detail": "{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthState\":\"CO\",\"bir"
+    },
+    {
+      "t": 1793686210.41,
+      "step": 0,
+      "api": "GET /v1/players/{id}",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 1.73,
+      "detail": "{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthState\":\"CO\",\"bir"
+    },
+    {
+      "t": 1793686213.795,
+      "step": 1,
+      "api": "GET /v1/players",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.102,
+      "detail": "{\"players\":[{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthStat"
+    },
+    {
+      "t": 1793686213.795,
+      "step": 1,
+      "api": "GET /v1/players",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.1,
+      "detail": "{\"players\":[{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthStat"
+    },
+    {
+      "t": 1793686215.104,
+      "step": 1,
+      "api": "GET /v1/players/{id}",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 1.407,
+      "detail": "{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthState\":\"CO\",\"bir"
+    },
+    {
+      "t": 1793686215.545,
+      "step": 1,
+      "api": "GET /v1/players/{id}",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 1.85,
+      "detail": "{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthState\":\"CO\",\"bir"
+    },
+    {
+      "t": 1793686218.751,
+      "step": 2,
+      "api": "GET /v1/players",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.047,
+      "detail": "{\"players\":[{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthStat"
+    },
+    {
+      "t": 1793686218.752,
+      "step": 2,
+      "api": "GET /v1/players",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 0.045,
+      "detail": "{\"players\":[{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthStat"
+    },
+    {
+      "t": 1793686219.827,
+      "step": 2,
+      "api": "GET /v1/players/{id}",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 1.122,
+      "detail": "{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthState\":\"CO\",\"bir"
+    },
+    {
+      "t": 1793686220.524,
+      "step": 2,
+      "api": "GET /v1/players/{id}",
+      "http": 200,
+      "outcome": "http_200",
+      "seconds": 1.817,
+      "detail": "{\"playerId\":\"aardsda01\",\"birthYear\":\"1981\",\"birthMonth\":\"12\",\"birthDay\":\"27\",\"birthCountry\":\"USA\",\"birthState\":\"CO\",\"bir"
+    },
+    {
+      "t": 1793686220.678,
+      "step": 0,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686220.678,
+      "step": 0,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686220.678,
+      "step": 0,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686220.678,
+      "step": 0,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686220.678,
+      "step": 0,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686220.678,
+      "step": 0,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686220.679,
+      "step": 0,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686220.679,
+      "step": 0,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.001,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686220.679,
+      "step": 0,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.001,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686220.679,
+      "step": 0,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686220.68,
+      "step": 0,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.001,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686220.68,
+      "step": 0,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686225.681,
+      "step": 1,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686225.682,
+      "step": 1,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.005,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686225.682,
+      "step": 1,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.004,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686225.685,
+      "step": 1,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.005,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686225.685,
+      "step": 1,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686225.686,
+      "step": 1,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.007,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686225.689,
+      "step": 1,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686225.689,
+      "step": 1,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.001,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686225.691,
+      "step": 1,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686225.693,
+      "step": 1,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686225.695,
+      "step": 1,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686225.695,
+      "step": 1,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686229.71,
+      "step": 3,
+      "api": "GET /v1/players",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 6.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686229.71,
+      "step": 3,
+      "api": "GET /v1/players/{id}",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 6.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686229.71,
+      "step": 3,
+      "api": "GET /v1/players",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 6.004,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686229.71,
+      "step": 3,
+      "api": "GET /v1/players/{id}",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 6.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686230.687,
+      "step": 2,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686230.687,
+      "step": 2,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.004,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686230.693,
+      "step": 2,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.009,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686230.695,
+      "step": 2,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.005,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686230.699,
+      "step": 2,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686230.699,
+      "step": 2,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686230.7,
+      "step": 2,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686230.701,
+      "step": 2,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686230.702,
+      "step": 2,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686230.704,
+      "step": 2,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686230.704,
+      "step": 2,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686230.706,
+      "step": 2,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686234.703,
+      "step": 4,
+      "api": "GET /v1/players/{id}",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 6.001,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686234.704,
+      "step": 4,
+      "api": "GET /v1/players",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 6.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686234.704,
+      "step": 4,
+      "api": "GET /v1/players",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 6.004,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686234.705,
+      "step": 4,
+      "api": "GET /v1/players/{id}",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 6.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686235.693,
+      "step": 3,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.006,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686235.693,
+      "step": 3,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.004,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686235.693,
+      "step": 3,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.005,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686235.694,
+      "step": 3,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.004,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686235.697,
+      "step": 3,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.007,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686235.697,
+      "step": 3,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.005,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686235.701,
+      "step": 3,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.005,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686235.702,
+      "step": 3,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.004,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686235.705,
+      "step": 3,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.001,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686235.707,
+      "step": 3,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686235.707,
+      "step": 3,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.001,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686235.708,
+      "step": 3,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686239.704,
+      "step": 5,
+      "api": "GET /v1/players",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 6.001,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686239.706,
+      "step": 5,
+      "api": "GET /v1/players/{id}",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 6.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686239.706,
+      "step": 5,
+      "api": "GET /v1/players",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 6.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686239.706,
+      "step": 5,
+      "api": "GET /v1/players/{id}",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 6.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686240.696,
+      "step": 4,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686240.697,
+      "step": 4,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686240.697,
+      "step": 4,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686240.697,
+      "step": 4,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.005,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686240.698,
+      "step": 4,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686240.698,
+      "step": 4,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686240.699,
+      "step": 4,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686240.7,
+      "step": 4,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686240.7,
+      "step": 4,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686240.7,
+      "step": 4,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686240.702,
+      "step": 4,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686240.703,
+      "step": 4,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686244.712,
+      "step": 6,
+      "api": "GET /v1/players",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 6.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686244.712,
+      "step": 6,
+      "api": "GET /v1/players",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 6.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686244.712,
+      "step": 6,
+      "api": "GET /v1/players/{id}",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 6.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686244.713,
+      "step": 6,
+      "api": "GET /v1/players/{id}",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 6.001,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686245.698,
+      "step": 5,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.004,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686245.698,
+      "step": 5,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686245.699,
+      "step": 5,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686245.7,
+      "step": 5,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.005,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686245.7,
+      "step": 5,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.004,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686245.701,
+      "step": 5,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.005,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686245.702,
+      "step": 5,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686245.702,
+      "step": 5,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.004,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686245.702,
+      "step": 5,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686245.703,
+      "step": 5,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686245.704,
+      "step": 5,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686245.706,
+      "step": 5,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686249.715,
+      "step": 7,
+      "api": "GET /v1/players",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 6.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686249.715,
+      "step": 7,
+      "api": "GET /v1/players/{id}",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 6.001,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686249.716,
+      "step": 7,
+      "api": "GET /v1/players",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 6.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686249.716,
+      "step": 7,
+      "api": "GET /v1/players/{id}",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 6.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686250.702,
+      "step": 6,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.004,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686250.702,
+      "step": 6,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686250.702,
+      "step": 6,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.004,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686250.703,
+      "step": 6,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.001,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686250.704,
+      "step": 6,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.004,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686250.706,
+      "step": 6,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686250.707,
+      "step": 6,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.001,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686250.707,
+      "step": 6,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686250.707,
+      "step": 6,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.004,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686250.71,
+      "step": 6,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.004,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686250.711,
+      "step": 6,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686250.712,
+      "step": 6,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.005,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686254.718,
+      "step": 8,
+      "api": "GET /v1/players",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 6.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686254.719,
+      "step": 8,
+      "api": "GET /v1/players",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 6.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686254.719,
+      "step": 8,
+      "api": "GET /v1/players/{id}",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 6.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686254.72,
+      "step": 8,
+      "api": "GET /v1/players/{id}",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 6.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686255.705,
+      "step": 7,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.004,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686255.707,
+      "step": 7,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686255.71,
+      "step": 7,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.005,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686255.711,
+      "step": 7,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.006,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686255.711,
+      "step": 7,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.007,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686255.712,
+      "step": 7,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.009,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686255.712,
+      "step": 7,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686255.712,
+      "step": 7,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.006,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686255.714,
+      "step": 7,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686255.714,
+      "step": 7,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686255.714,
+      "step": 7,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686255.715,
+      "step": 7,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686260.712,
+      "step": 8,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.006,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686260.712,
+      "step": 8,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.005,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686260.714,
+      "step": 8,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.006,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686260.715,
+      "step": 8,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.004,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686260.715,
+      "step": 8,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.005,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686260.716,
+      "step": 8,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.004,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686260.716,
+      "step": 8,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.004,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686260.716,
+      "step": 8,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686260.716,
+      "step": 8,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686260.716,
+      "step": 8,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686260.717,
+      "step": 8,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686260.718,
+      "step": 8,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686280.755,
+      "step": 9,
+      "api": "GET /v1/players/{id}",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 6.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686280.755,
+      "step": 9,
+      "api": "GET /v1/players",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 6.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686280.755,
+      "step": 9,
+      "api": "GET /v1/players",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 6.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686280.755,
+      "step": 9,
+      "api": "GET /v1/players/{id}",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 6.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686285.76,
+      "step": 10,
+      "api": "GET /v1/players",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 6.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686285.762,
+      "step": 10,
+      "api": "GET /v1/players/{id}",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 6.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686285.762,
+      "step": 10,
+      "api": "GET /v1/players/{id}",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 6.001,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686285.762,
+      "step": 10,
+      "api": "GET /v1/players",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 6.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686286.748,
+      "step": 9,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.006,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686286.748,
+      "step": 9,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686286.749,
+      "step": 9,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.004,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686286.75,
+      "step": 9,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.005,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686286.75,
+      "step": 9,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.004,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686286.75,
+      "step": 9,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686286.751,
+      "step": 9,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.004,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686286.751,
+      "step": 9,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.005,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686286.752,
+      "step": 9,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686286.753,
+      "step": 9,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686286.753,
+      "step": 9,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686286.753,
+      "step": 9,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686290.763,
+      "step": 11,
+      "api": "GET /v1/players/{id}",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 6.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686290.763,
+      "step": 11,
+      "api": "GET /v1/players",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 6.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686290.763,
+      "step": 11,
+      "api": "GET /v1/players",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 6.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686290.763,
+      "step": 11,
+      "api": "GET /v1/players/{id}",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 6.001,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686291.75,
+      "step": 10,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.004,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686291.75,
+      "step": 10,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686291.752,
+      "step": 10,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686291.752,
+      "step": 10,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.001,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686291.754,
+      "step": 10,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686291.754,
+      "step": 10,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686291.755,
+      "step": 10,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.001,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686291.756,
+      "step": 10,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686291.756,
+      "step": 10,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686291.757,
+      "step": 10,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686291.76,
+      "step": 10,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.004,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686291.76,
+      "step": 10,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686295.767,
+      "step": 12,
+      "api": "GET /v1/players",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 6.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686295.767,
+      "step": 12,
+      "api": "GET /v1/players",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 6.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686295.767,
+      "step": 12,
+      "api": "GET /v1/players/{id}",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 6.001,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686295.767,
+      "step": 12,
+      "api": "GET /v1/players/{id}",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 6.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686296.753,
+      "step": 11,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686296.755,
+      "step": 11,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686296.755,
+      "step": 11,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686296.76,
+      "step": 11,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.006,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686296.76,
+      "step": 11,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.006,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686296.761,
+      "step": 11,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.005,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686296.761,
+      "step": 11,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686296.761,
+      "step": 11,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.005,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686296.761,
+      "step": 11,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.004,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686296.761,
+      "step": 11,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686296.762,
+      "step": 11,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686296.763,
+      "step": 11,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686300.767,
+      "step": 13,
+      "api": "GET /v1/players/{id}",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 6.001,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686300.767,
+      "step": 13,
+      "api": "GET /v1/players",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 6.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686300.767,
+      "step": 13,
+      "api": "GET /v1/players/{id}",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 6.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686300.767,
+      "step": 13,
+      "api": "GET /v1/players",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 6.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686301.764,
+      "step": 12,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.008,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686301.764,
+      "step": 12,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.007,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686301.764,
+      "step": 12,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686301.765,
+      "step": 12,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.004,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686301.765,
+      "step": 12,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686301.765,
+      "step": 12,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.003,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686301.765,
+      "step": 12,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686301.766,
+      "step": 12,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686301.766,
+      "step": 12,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686301.766,
+      "step": 12,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686301.767,
+      "step": 12,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686301.767,
+      "step": 12,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "client_timeout",
+      "seconds": 12.002,
+      "detail": "timeout"
+    },
+    {
+      "t": 1793686301.808,
+      "step": 13,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "no_http_response",
+      "seconds": 7.047,
+      "detail": "RemoteDisconnected"
+    },
+    {
+      "t": 1793686301.808,
+      "step": 13,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "no_http_response",
+      "seconds": 7.046,
+      "detail": "RemoteDisconnected"
+    },
+    {
+      "t": 1793686301.808,
+      "step": 13,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "no_http_response",
+      "seconds": 7.044,
+      "detail": "RemoteDisconnected"
+    },
+    {
+      "t": 1793686301.808,
+      "step": 13,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "no_http_response",
+      "seconds": 7.045,
+      "detail": "RemoteDisconnected"
+    },
+    {
+      "t": 1793686301.808,
+      "step": 13,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "no_http_response",
+      "seconds": 7.047,
+      "detail": "RemoteDisconnected"
+    },
+    {
+      "t": 1793686301.809,
+      "step": 13,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "no_http_response",
+      "seconds": 7.051,
+      "detail": "RemoteDisconnected"
+    },
+    {
+      "t": 1793686301.809,
+      "step": 13,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "no_http_response",
+      "seconds": 7.049,
+      "detail": "RemoteDisconnected"
+    },
+    {
+      "t": 1793686301.809,
+      "step": 13,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "no_http_response",
+      "seconds": 7.049,
+      "detail": "RemoteDisconnected"
+    },
+    {
+      "t": 1793686301.809,
+      "step": 13,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "no_http_response",
+      "seconds": 7.049,
+      "detail": "RemoteDisconnected"
+    },
+    {
+      "t": 1793686301.809,
+      "step": 13,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "no_http_response",
+      "seconds": 7.049,
+      "detail": "RemoteDisconnected"
+    },
+    {
+      "t": 1793686301.809,
+      "step": 13,
+      "api": "GET /v1/chat/list-models",
+      "http": 0,
+      "outcome": "no_http_response",
+      "seconds": 7.047,
+      "detail": "RemoteDisconnected"
+    },
+    {
+      "t": 1793686301.809,
+      "step": 13,
+      "api": "POST /v1/chat",
+      "http": 0,
+      "outcome": "no_http_response",
+      "seconds": 7.047,
+      "detail": "RemoteDisconnected"
+    }
+  ],
+  "summary": {
+    "byStep": {
+      "0": {
+        "GET /v1/players": {
+          "http_200": 2
+        },
+        "GET /v1/players/{id}": {
+          "http_200": 2
+        },
+        "GET /v1/chat/list-models": {
+          "client_timeout": 6
+        },
+        "POST /v1/chat": {
+          "client_timeout": 6
+        }
+      },
+      "1": {
+        "GET /v1/players": {
+          "http_200": 2
+        },
+        "GET /v1/players/{id}": {
+          "http_200": 2
+        },
+        "GET /v1/chat/list-models": {
+          "client_timeout": 6
+        },
+        "POST /v1/chat": {
+          "client_timeout": 6
+        }
+      },
+      "2": {
+        "GET /v1/players": {
+          "http_200": 2
+        },
+        "GET /v1/players/{id}": {
+          "http_200": 2
+        },
+        "POST /v1/chat": {
+          "client_timeout": 6
+        },
+        "GET /v1/chat/list-models": {
+          "client_timeout": 6
+        }
+      },
+      "3": {
+        "GET /v1/players": {
+          "client_timeout": 2
+        },
+        "GET /v1/players/{id}": {
+          "client_timeout": 2
+        },
+        "GET /v1/chat/list-models": {
+          "client_timeout": 6
+        },
+        "POST /v1/chat": {
+          "client_timeout": 6
+        }
+      },
+      "4": {
+        "GET /v1/players/{id}": {
+          "client_timeout": 2
+        },
+        "GET /v1/players": {
+          "client_timeout": 2
+        },
+        "POST /v1/chat": {
+          "client_timeout": 6
+        },
+        "GET /v1/chat/list-models": {
+          "client_timeout": 6
+        }
+      },
+      "5": {
+        "GET /v1/players": {
+          "client_timeout": 2
+        },
+        "GET /v1/players/{id}": {
+          "client_timeout": 2
+        },
+        "GET /v1/chat/list-models": {
+          "client_timeout": 6
+        },
+        "POST /v1/chat": {
+          "client_timeout": 6
+        }
+      },
+      "6": {
+        "GET /v1/players": {
+          "client_timeout": 2
+        },
+        "GET /v1/players/{id}": {
+          "client_timeout": 2
+        },
+        "GET /v1/chat/list-models": {
+          "client_timeout": 6
+        },
+        "POST /v1/chat": {
+          "client_timeout": 6
+        }
+      },
+      "7": {
+        "GET /v1/players": {
+          "client_timeout": 2
+        },
+        "GET /v1/players/{id}": {
+          "client_timeout": 2
+        },
+        "GET /v1/chat/list-models": {
+          "client_timeout": 6
+        },
+        "POST /v1/chat": {
+          "client_timeout": 6
+        }
+      },
+      "8": {
+        "GET /v1/players": {
+          "client_timeout": 2
+        },
+        "GET /v1/players/{id}": {
+          "client_timeout": 2
+        },
+        "GET /v1/chat/list-models": {
+          "client_timeout": 6
+        },
+        "POST /v1/chat": {
+          "client_timeout": 6
+        }
+      },
+      "9": {
+        "GET /v1/players/{id}": {
+          "client_timeout": 2
+        },
+        "GET /v1/players": {
+          "client_timeout": 2
+        },
+        "GET /v1/chat/list-models": {
+          "client_timeout": 6
+        },
+        "POST /v1/chat": {
+          "client_timeout": 6
+        }
+      },
+      "10": {
+        "GET /v1/players": {
+          "client_timeout": 2
+        },
+        "GET /v1/players/{id}": {
+          "client_timeout": 2
+        },
+        "GET /v1/chat/list-models": {
+          "client_timeout": 6
+        },
+        "POST /v1/chat": {
+          "client_timeout": 6
+        }
+      },
+      "11": {
+        "GET /v1/players/{id}": {
+          "client_timeout": 2
+        },
+        "GET /v1/players": {
+          "client_timeout": 2
+        },
+        "GET /v1/chat/list-models": {
+          "client_timeout": 6
+        },
+        "POST /v1/chat": {
+          "client_timeout": 6
+        }
+      },
+      "12": {
+        "GET /v1/players": {
+          "client_timeout": 2
+        },
+        "GET /v1/players/{id}": {
+          "client_timeout": 2
+        },
+        "GET /v1/chat/list-models": {
+          "client_timeout": 6
+        },
+        "POST /v1/chat": {
+          "client_timeout": 6
+        }
+      },
+      "13": {
+        "GET /v1/players/{id}": {
+          "client_timeout": 2
+        },
+        "GET /v1/players": {
+          "client_timeout": 2
+        },
+        "POST /v1/chat": {
+          "no_http_response": 6
+        },
+        "GET /v1/chat/list-models": {
+          "no_http_response": 6
+        }
+      }
+    },
+    "totalsByApi": {
+      "GET /v1/players": {
+        "http_200": 6,
+        "client_timeout": 22
+      },
+      "GET /v1/players/{id}": {
+        "http_200": 6,
+        "client_timeout": 22
+      },
+      "GET /v1/chat/list-models": {
+        "client_timeout": 78,
+        "no_http_response": 6
+      },
+      "POST /v1/chat": {
+        "client_timeout": 78,
+        "no_http_response": 6
+      }
+    }
+  }
+}

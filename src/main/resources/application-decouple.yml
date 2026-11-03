@@ -1,5 +1,0 @@
-# 3.1 — LLM work runs on a bounded pool; player requests keep the Tomcat threads.
-app:
-  chat:
-    stage: decouple
-    async-enabled: true
