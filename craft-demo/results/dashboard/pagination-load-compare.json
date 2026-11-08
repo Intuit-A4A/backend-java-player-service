@@ -1,0 +1,21 @@
+{
+  "heap": "128m on both JVMs",
+  "concurrency": 30,
+  "attempts_each": 30,
+  "timeout_s": 20,
+  "note": "Main 500s are OutOfMemoryError while materializing the full roster. Branch returns one page and stays 200.",
+  "main": {
+    "url": "http://127.0.0.1:18080/v1/players",
+    "outcomes": {
+      "http_500": 10,
+      "client_IncompleteRead": 1,
+      "http_200": 19
+    }
+  },
+  "branch": {
+    "url": "http://127.0.0.1:8080/v1/players",
+    "outcomes": {
+      "http_200": 30
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "main": {
+    "url": "http://127.0.0.1:18080/v1/players",
+    "http": 200,
+    "bytes": 8986485,
+    "seconds": 0.077494
+  },
+  "branch_default": {
+    "url": "http://127.0.0.1:8080/v1/players",
+    "http": 200,
+    "bytes": 23332,
+    "seconds": 0.026698
+  },
+  "branch_page10": {
+    "url": "http://127.0.0.1:8080/v1/players?page=0&size=10",
+    "http": 200,
+    "bytes": 4691,
+    "seconds": 0.026484,
+    "totalElements": 19370,
+    "totalPages": 1937,
+    "playersOnPage": 10
+  }
+}

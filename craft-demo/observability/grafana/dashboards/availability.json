@@ -6,13 +6,28 @@
   ],
   "timezone": "browser",
   "schemaVersion": 39,
-  "version": 3,
+  "version": 4,
   "refresh": "5s",
   "time": {
     "from": "now-15m",
     "to": "now"
   },
   "panels": [
+    {
+      "id": 100,
+      "type": "text",
+      "title": "Craft demo \u2014 availability ramp",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "options": {
+        "mode": "markdown",
+        "content": "## What this dashboard shows (branch JVM only, :8080)\n\nOne process. Each series appears **once**.\n\n| Series | Meaning |\n|--------|---------|\n| **busy** | Tomcat workers currently inside a request (`tomcat_threads_busy_threads`) |\n| **max configured** | Pool cap, dashed orange (`tomcat_threads_config_max_threads`, pinned to **40**) |\n\nWhen **busy** sits on **max configured**, new player calls wait or time out. Bars under each API are **completed** responses in the scrape interval (200 / 503 / 500 / other 5xx). Client timeouts never become a bar \u2014 the request never finished on the server.\n\nPagination load comparison is the other dashboard: **Pagination \u2014 load (main vs paged)**.\n"
+      }
+    },
     {
       "id": 1,
       "type": "row",
@@ -21,7 +36,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 0
+        "y": 9
       },
       "collapsed": false,
       "panels": []
@@ -38,7 +53,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 1
+        "y": 10
       },
       "fieldConfig": {
         "defaults": {
@@ -53,10 +68,28 @@
         },
         "overrides": [
           {
-            "matcher": { "id": "byName", "options": "max configured" },
+            "matcher": {
+              "id": "byName",
+              "options": "max configured"
+            },
             "properties": [
-              { "id": "custom.lineStyle", "value": { "dash": [10, 10], "fill": "dash" } },
-              { "id": "color", "value": { "fixedColor": "orange", "mode": "fixed" } }
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "dash": [
+                    10,
+                    10
+                  ],
+                  "fill": "dash"
+                }
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "orange",
+                  "mode": "fixed"
+                }
+              }
             ]
           }
         ]
@@ -73,12 +106,12 @@
       "targets": [
         {
           "refId": "A",
-          "expr": "tomcat_threads_busy_threads",
+          "expr": "max(tomcat_threads_busy_threads{deployment=\"branch\"})",
           "legendFormat": "busy"
         },
         {
           "refId": "B",
-          "expr": "tomcat_threads_config_max_threads",
+          "expr": "max(tomcat_threads_config_max_threads{deployment=\"branch\"})",
           "legendFormat": "max configured"
         }
       ]
@@ -91,86 +124,13 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 9
-      },
-      "collapsed": false,
-      "panels": []
-    },
-    {
-      "id": 5,
-      "type": "timeseries",
-      "title": "Completed requests (count in interval)",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 24,
-        "x": 0,
-        "y": 10
-      },
-      "fieldConfig": {
-        "defaults": {
-          "unit": "short",
-          "min": 0,
-          "custom": {
-            "drawStyle": "bars",
-            "fillOpacity": 80,
-            "stacking": {
-              "mode": "normal"
-            }
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi"
-        }
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "expr": "sum(increase(http_server_requests_seconds_count{uri=\"/v1/players\",method=\"GET\",status=\"200\"}[$__rate_interval])) or vector(0)",
-          "legendFormat": "200"
-        },
-        {
-          "refId": "B",
-          "expr": "sum(increase(http_server_requests_seconds_count{uri=\"/v1/players\",method=\"GET\",status=\"503\"}[$__rate_interval])) or vector(0)",
-          "legendFormat": "503"
-        },
-        {
-          "refId": "C",
-          "expr": "sum(increase(http_server_requests_seconds_count{uri=\"/v1/players\",method=\"GET\",status=\"500\"}[$__rate_interval])) or vector(0)",
-          "legendFormat": "500"
-        },
-        {
-          "refId": "D",
-          "expr": "sum(increase(http_server_requests_seconds_count{uri=\"/v1/players\",method=\"GET\",status=\"502\"}[$__rate_interval])) + sum(increase(http_server_requests_seconds_count{uri=\"/v1/players\",method=\"GET\",status=\"504\"}[$__rate_interval])) or vector(0)",
-          "legendFormat": "other 5xx"
-        }
-      ]
-    },
-    {
-      "id": 6,
-      "type": "row",
-      "title": "GET /v1/players/{id}",
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
         "y": 18
       },
       "collapsed": false,
       "panels": []
     },
     {
-      "id": 7,
+      "id": 5,
       "type": "timeseries",
       "title": "Completed requests (count in interval)",
       "datasource": {
@@ -209,30 +169,30 @@
       "targets": [
         {
           "refId": "A",
-          "expr": "sum(increase(http_server_requests_seconds_count{uri=\"/v1/players/{id}\",method=\"GET\",status=\"200\"}[$__rate_interval])) or vector(0)",
+          "expr": "sum(increase(http_server_requests_seconds_count{deployment=\"branch\",uri=\"/v1/players\",method=\"GET\",status=\"200\"}[$__rate_interval])) or vector(0)",
           "legendFormat": "200"
         },
         {
           "refId": "B",
-          "expr": "sum(increase(http_server_requests_seconds_count{uri=\"/v1/players/{id}\",method=\"GET\",status=\"503\"}[$__rate_interval])) or vector(0)",
+          "expr": "sum(increase(http_server_requests_seconds_count{deployment=\"branch\",uri=\"/v1/players\",method=\"GET\",status=\"503\"}[$__rate_interval])) or vector(0)",
           "legendFormat": "503"
         },
         {
           "refId": "C",
-          "expr": "sum(increase(http_server_requests_seconds_count{uri=\"/v1/players/{id}\",method=\"GET\",status=\"500\"}[$__rate_interval])) or vector(0)",
+          "expr": "sum(increase(http_server_requests_seconds_count{deployment=\"branch\",uri=\"/v1/players\",method=\"GET\",status=\"500\"}[$__rate_interval])) or vector(0)",
           "legendFormat": "500"
         },
         {
           "refId": "D",
-          "expr": "sum(increase(http_server_requests_seconds_count{uri=\"/v1/players/{id}\",method=\"GET\",status=\"502\"}[$__rate_interval])) + sum(increase(http_server_requests_seconds_count{uri=\"/v1/players/{id}\",method=\"GET\",status=\"504\"}[$__rate_interval])) or vector(0)",
+          "expr": "sum(increase(http_server_requests_seconds_count{deployment=\"branch\",uri=\"/v1/players\",method=\"GET\",status=\"502\"}[$__rate_interval])) + sum(increase(http_server_requests_seconds_count{deployment=\"branch\",uri=\"/v1/players\",method=\"GET\",status=\"504\"}[$__rate_interval])) or vector(0)",
           "legendFormat": "other 5xx"
         }
       ]
     },
     {
-      "id": 8,
+      "id": 6,
       "type": "row",
-      "title": "GET /v1/chat/list-models",
+      "title": "GET /v1/players/{id}",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -243,7 +203,7 @@
       "panels": []
     },
     {
-      "id": 9,
+      "id": 7,
       "type": "timeseries",
       "title": "Completed requests (count in interval)",
       "datasource": {
@@ -282,30 +242,30 @@
       "targets": [
         {
           "refId": "A",
-          "expr": "sum(increase(http_server_requests_seconds_count{uri=\"/v1/chat/list-models\",method=\"GET\",status=\"200\"}[$__rate_interval])) or vector(0)",
+          "expr": "sum(increase(http_server_requests_seconds_count{deployment=\"branch\",uri=\"/v1/players/{id}\",method=\"GET\",status=\"200\"}[$__rate_interval])) or vector(0)",
           "legendFormat": "200"
         },
         {
           "refId": "B",
-          "expr": "sum(increase(http_server_requests_seconds_count{uri=\"/v1/chat/list-models\",method=\"GET\",status=\"503\"}[$__rate_interval])) or vector(0)",
+          "expr": "sum(increase(http_server_requests_seconds_count{deployment=\"branch\",uri=\"/v1/players/{id}\",method=\"GET\",status=\"503\"}[$__rate_interval])) or vector(0)",
           "legendFormat": "503"
         },
         {
           "refId": "C",
-          "expr": "sum(increase(http_server_requests_seconds_count{uri=\"/v1/chat/list-models\",method=\"GET\",status=\"500\"}[$__rate_interval])) or vector(0)",
+          "expr": "sum(increase(http_server_requests_seconds_count{deployment=\"branch\",uri=\"/v1/players/{id}\",method=\"GET\",status=\"500\"}[$__rate_interval])) or vector(0)",
           "legendFormat": "500"
         },
         {
           "refId": "D",
-          "expr": "sum(increase(http_server_requests_seconds_count{uri=\"/v1/chat/list-models\",method=\"GET\",status=\"502\"}[$__rate_interval])) + sum(increase(http_server_requests_seconds_count{uri=\"/v1/chat/list-models\",method=\"GET\",status=\"504\"}[$__rate_interval])) or vector(0)",
+          "expr": "sum(increase(http_server_requests_seconds_count{deployment=\"branch\",uri=\"/v1/players/{id}\",method=\"GET\",status=\"502\"}[$__rate_interval])) + sum(increase(http_server_requests_seconds_count{deployment=\"branch\",uri=\"/v1/players/{id}\",method=\"GET\",status=\"504\"}[$__rate_interval])) or vector(0)",
           "legendFormat": "other 5xx"
         }
       ]
     },
     {
-      "id": 10,
+      "id": 8,
       "type": "row",
-      "title": "POST /v1/chat",
+      "title": "GET /v1/chat/list-models",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -316,7 +276,7 @@
       "panels": []
     },
     {
-      "id": 11,
+      "id": 9,
       "type": "timeseries",
       "title": "Completed requests (count in interval)",
       "datasource": {
@@ -355,22 +315,95 @@
       "targets": [
         {
           "refId": "A",
-          "expr": "sum(increase(http_server_requests_seconds_count{uri=\"/v1/chat\",method=\"POST\",status=\"200\"}[$__rate_interval])) or vector(0)",
+          "expr": "sum(increase(http_server_requests_seconds_count{deployment=\"branch\",uri=\"/v1/chat/list-models\",method=\"GET\",status=\"200\"}[$__rate_interval])) or vector(0)",
           "legendFormat": "200"
         },
         {
           "refId": "B",
-          "expr": "sum(increase(http_server_requests_seconds_count{uri=\"/v1/chat\",method=\"POST\",status=\"503\"}[$__rate_interval])) or vector(0)",
+          "expr": "sum(increase(http_server_requests_seconds_count{deployment=\"branch\",uri=\"/v1/chat/list-models\",method=\"GET\",status=\"503\"}[$__rate_interval])) or vector(0)",
           "legendFormat": "503"
         },
         {
           "refId": "C",
-          "expr": "sum(increase(http_server_requests_seconds_count{uri=\"/v1/chat\",method=\"POST\",status=\"500\"}[$__rate_interval])) or vector(0)",
+          "expr": "sum(increase(http_server_requests_seconds_count{deployment=\"branch\",uri=\"/v1/chat/list-models\",method=\"GET\",status=\"500\"}[$__rate_interval])) or vector(0)",
           "legendFormat": "500"
         },
         {
           "refId": "D",
-          "expr": "sum(increase(http_server_requests_seconds_count{uri=\"/v1/chat\",method=\"POST\",status=\"502\"}[$__rate_interval])) + sum(increase(http_server_requests_seconds_count{uri=\"/v1/chat\",method=\"POST\",status=\"504\"}[$__rate_interval])) or vector(0)",
+          "expr": "sum(increase(http_server_requests_seconds_count{deployment=\"branch\",uri=\"/v1/chat/list-models\",method=\"GET\",status=\"502\"}[$__rate_interval])) + sum(increase(http_server_requests_seconds_count{deployment=\"branch\",uri=\"/v1/chat/list-models\",method=\"GET\",status=\"504\"}[$__rate_interval])) or vector(0)",
+          "legendFormat": "other 5xx"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "type": "row",
+      "title": "POST /v1/chat",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 45
+      },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "id": 11,
+      "type": "timeseries",
+      "title": "Completed requests (count in interval)",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 46
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "min": 0,
+          "custom": {
+            "drawStyle": "bars",
+            "fillOpacity": 80,
+            "stacking": {
+              "mode": "normal"
+            }
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(increase(http_server_requests_seconds_count{deployment=\"branch\",uri=\"/v1/chat\",method=\"POST\",status=\"200\"}[$__rate_interval])) or vector(0)",
+          "legendFormat": "200"
+        },
+        {
+          "refId": "B",
+          "expr": "sum(increase(http_server_requests_seconds_count{deployment=\"branch\",uri=\"/v1/chat\",method=\"POST\",status=\"503\"}[$__rate_interval])) or vector(0)",
+          "legendFormat": "503"
+        },
+        {
+          "refId": "C",
+          "expr": "sum(increase(http_server_requests_seconds_count{deployment=\"branch\",uri=\"/v1/chat\",method=\"POST\",status=\"500\"}[$__rate_interval])) or vector(0)",
+          "legendFormat": "500"
+        },
+        {
+          "refId": "D",
+          "expr": "sum(increase(http_server_requests_seconds_count{deployment=\"branch\",uri=\"/v1/chat\",method=\"POST\",status=\"502\"}[$__rate_interval])) + sum(increase(http_server_requests_seconds_count{deployment=\"branch\",uri=\"/v1/chat\",method=\"POST\",status=\"504\"}[$__rate_interval])) or vector(0)",
           "legendFormat": "other 5xx"
         }
       ]

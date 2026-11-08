@@ -1,0 +1,203 @@
+{
+  "uid": "pagination-compare",
+  "title": "Pagination — same list load",
+  "tags": ["player-service", "craft-demo"],
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "version": 2,
+  "refresh": "5s",
+  "time": { "from": "now-15m", "to": "now" },
+  "panels": [
+    {
+      "id": 1,
+      "type": "text",
+      "gridPos": { "h": 4, "w": 24, "x": 0, "y": 0 },
+      "options": {
+        "mode": "markdown",
+        "content": "## Same load, two jars (both `-Xmx128m`)\n**1. Main, no paging** (`:18080`): each `GET /v1/players` loads the full roster. **30 concurrent** full reads → **HTTP 500** (`OutOfMemoryError`).\n**2. Branch, paging** (`:8080`): the same 30 calls return one page → **HTTP 200**, **zero 5xx**.\n`python3 scripts/pagination_load_compare.py`"
+      }
+    },
+    {
+      "id": 2,
+      "type": "row",
+      "title": "1. Main — unbounded list (:18080)",
+      "gridPos": { "h": 1, "w": 12, "x": 0, "y": 4 },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "id": 3,
+      "type": "row",
+      "title": "2. Branch — paged list (:8080)",
+      "gridPos": { "h": 1, "w": 12, "x": 12, "y": 4 },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "id": 10,
+      "type": "stat",
+      "title": "5xx completed (5m)",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "gridPos": { "h": 4, "w": 6, "x": 0, "y": 5 },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "red", "value": 1 }
+            ]
+          }
+        }
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(increase(http_server_requests_seconds_count{deployment=\"main\",uri=\"/v1/players\",method=\"GET\",status=~\"5..\"}[5m])) or vector(0)"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "type": "stat",
+      "title": "HTTP 200 completed (5m)",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "gridPos": { "h": 4, "w": 6, "x": 6, "y": 5 },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(increase(http_server_requests_seconds_count{deployment=\"main\",uri=\"/v1/players\",method=\"GET\",status=\"200\"}[5m])) or vector(0)"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "type": "stat",
+      "title": "5xx completed (5m)",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "gridPos": { "h": 4, "w": 6, "x": 12, "y": 5 },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "red", "value": 1 }
+            ]
+          }
+        }
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(increase(http_server_requests_seconds_count{deployment=\"branch\",uri=\"/v1/players\",method=\"GET\",status=~\"5..\"}[5m])) or vector(0)"
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "type": "stat",
+      "title": "HTTP 200 completed (5m)",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "gridPos": { "h": 4, "w": 6, "x": 18, "y": 5 },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(increase(http_server_requests_seconds_count{deployment=\"branch\",uri=\"/v1/players\",method=\"GET\",status=\"200\"}[5m])) or vector(0)"
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "type": "timeseries",
+      "title": "Completed GET /v1/players",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 9 },
+      "fieldConfig": {
+        "defaults": {
+          "custom": { "drawStyle": "bars", "fillOpacity": 80, "stacking": { "mode": "normal" } },
+          "min": 0
+        }
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(increase(http_server_requests_seconds_count{deployment=\"main\",uri=\"/v1/players\",method=\"GET\",status=\"200\"}[$__rate_interval])) or vector(0)",
+          "legendFormat": "200"
+        },
+        {
+          "refId": "B",
+          "expr": "sum(increase(http_server_requests_seconds_count{deployment=\"main\",uri=\"/v1/players\",method=\"GET\",status=~\"5..\"}[$__rate_interval])) or vector(0)",
+          "legendFormat": "5xx"
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "type": "timeseries",
+      "title": "Completed GET /v1/players",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 9 },
+      "fieldConfig": {
+        "defaults": {
+          "custom": { "drawStyle": "bars", "fillOpacity": 80, "stacking": { "mode": "normal" } },
+          "min": 0
+        }
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(increase(http_server_requests_seconds_count{deployment=\"branch\",uri=\"/v1/players\",method=\"GET\",status=\"200\"}[$__rate_interval])) or vector(0)",
+          "legendFormat": "200"
+        },
+        {
+          "refId": "B",
+          "expr": "sum(increase(http_server_requests_seconds_count{deployment=\"branch\",uri=\"/v1/players\",method=\"GET\",status=~\"5..\"}[$__rate_interval])) or vector(0)",
+          "legendFormat": "5xx"
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "type": "timeseries",
+      "title": "Tomcat busy vs max (40)",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 17 },
+      "fieldConfig": { "defaults": { "min": 0, "max": 40 } },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "max(tomcat_threads_busy_threads{deployment=\"main\"})",
+          "legendFormat": "busy"
+        },
+        {
+          "refId": "B",
+          "expr": "max(tomcat_threads_config_max_threads{deployment=\"main\"})",
+          "legendFormat": "max configured"
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "type": "timeseries",
+      "title": "Tomcat busy vs max (40)",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "gridPos": { "h": 7, "w": 12, "x": 12, "y": 17 },
+      "fieldConfig": { "defaults": { "min": 0, "max": 40 } },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "max(tomcat_threads_busy_threads{deployment=\"branch\"})",
+          "legendFormat": "busy"
+        },
+        {
+          "refId": "B",
+          "expr": "max(tomcat_threads_config_max_threads{deployment=\"branch\"})",
+          "legendFormat": "max configured"
+        }
+      ]
+    }
+  ]
+}
