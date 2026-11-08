@@ -49,7 +49,7 @@ Same hang peer on **11434**. Full tables: [`ramp-comparison.md`](../dashboard/ra
 
 **Grafana (frozen):** [`../dashboard/screenshots/`](../dashboard/screenshots/) — use `grafana-ramp-annotated.png` on screen; re-run `sh scripts/capture_grafana_screenshots.sh` after a fresh ramp if panels are empty.
 
-**45 min script:** [`../../presenter-45min.md`](../../presenter-45min.md) · **Slides:** [`../../slides.md`](../../slides.md).
+**45 min script:** [`../../presenter-45min.md`](../../presenter-45min.md) · **Slides:** [`../../Player-Service-Availability.pptx`](../../Player-Service-Availability.pptx).
 
 ---
 

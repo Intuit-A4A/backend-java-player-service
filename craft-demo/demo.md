@@ -28,7 +28,7 @@ Design write-up. The live set is [`presenter-45min.md`](presenter-45min.md), [`P
 
 **Success criterion for this talk:** player endpoints return **200 within the client deadline** while chat is stuck on a model that accepts TCP and never responds. Chat 503 is acceptable; player **client timeout** is not.
 
-**45 min presenter:** [`presenter-45min.md`](presenter-45min.md) · **Slides:** [`slides.md`](slides.md). **Demo commands:** [`demo-note.md`](demo-note.md). **Before/after evidence:** [`results/demo-capture/demo-evidence.md`](results/demo-capture/demo-evidence.md). **Scorecard + Grafana PNGs:** [`presenter-scorecard.md`](results/dashboard/presenter-scorecard.md), [`screenshots/`](results/dashboard/screenshots/).
+**45 min presenter:** [`presenter-45min.md`](presenter-45min.md) · **Slides:** [`Player-Service-Availability.pptx`](Player-Service-Availability.pptx). **Commands:** [`commands.md`](commands.md). **Before/after evidence:** [`results/demo-capture/demo-evidence.md`](results/demo-capture/demo-evidence.md). **Scorecard + Grafana PNGs:** [`presenter-scorecard.md`](results/dashboard/presenter-scorecard.md), [`screenshots/`](results/dashboard/screenshots/).
 
 ---
 

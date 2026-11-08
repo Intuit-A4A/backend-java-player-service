@@ -6,7 +6,7 @@
 | [`Player-Service-Availability.pptx`](Player-Service-Availability.pptx) | The slides (import into Google Slides) |
 | [`commands.md`](commands.md) | Every command and curl |
 
-[`demo.md`](demo.md) is the written design narrative behind the slides. [`slides.md`](slides.md) is the old Marp outline. [`demo-note.md`](demo-note.md) is the old command notebook; use `commands.md`.
+[`demo.md`](demo.md) is the written design narrative behind the slides.
 
 **Branch:** `craft-demo/availability` · **Profiles:** default baseline · `--spring.profiles.active=timeouts`
 
