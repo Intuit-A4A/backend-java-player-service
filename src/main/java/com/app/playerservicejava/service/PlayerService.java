@@ -5,12 +5,17 @@ import com.app.playerservicejava.model.Players;
 import com.app.playerservicejava.repository.PlayerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
 public class PlayerService {
+
+    public static final int MAX_PAGE_SIZE = 100;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(PlayerService.class);
 
     private final PlayerRepository playerRepository;
@@ -19,8 +24,15 @@ public class PlayerService {
         this.playerRepository = playerRepository;
     }
 
-    public Players getPlayers() {
-        return loadAll();
+    public Players getPlayers(Pageable pageable) {
+        Page<Player> page = playerRepository.findAll(pageable);
+        Players players = new Players();
+        players.setPlayers(page.getContent());
+        players.setPage(page.getNumber());
+        players.setSize(page.getSize());
+        players.setTotalElements(page.getTotalElements());
+        players.setTotalPages(page.getTotalPages());
+        return players;
     }
 
     public Optional<Player> getPlayerById(String playerId) {
@@ -37,12 +49,5 @@ public class PlayerService {
             throw new IllegalStateException("Interrupted while simulating player latency", e);
         }
         return player;
-    }
-
-    private Players loadAll() {
-        Players players = new Players();
-        playerRepository.findAll()
-                .forEach(players.getPlayers()::add);
-        return players;
     }
 }

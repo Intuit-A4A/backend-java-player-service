@@ -1,6 +1,6 @@
 # Player service demo
 
-**One-line pitch:** A Spring Boot service with a core player API and a secondary chat API over Ollama. On `main` you cannot see whether the player API is healthy, you misread database outages as 404, and hung chat can starve Tomcat so player calls never start. The branch adds observability first, then a minimal chat change so player traffic stays up under the same load.
+**One-line pitch:** A Spring Boot service with a core player API and a secondary chat API over Ollama. On `main` you cannot see whether the player API is healthy, you misread database outages as 404, `GET /v1/players` loads the whole roster into one response, and hung chat can starve Tomcat so player calls never start. The branch adds observability first, correct errors and bounded list reads, then a minimal chat change so player traffic stays up under the same load.
 
 ---
 
@@ -15,7 +15,7 @@ ChatController    -> ChatClientService -> OllamaAPI -> Ollama
 
 | API | Role |
 |-----|------|
-| `GET /v1/players`, `GET /v1/players/{id}` | Core. By-id sleeps 0–2s on purpose |
+| `GET /v1/players?page=&size=`, `GET /v1/players/{id}` | Core list is offset-paged (default 50, max 100); by-id sleeps 0–2s on purpose |
 | `GET /v1/chat/list-models`, `POST /v1/chat` | Secondary. LLM via Ollama |
 
 **Success criterion for this talk:** player endpoints return **200 within the client deadline** while chat is stuck on a model that accepts TCP and never responds. Chat 503 is acceptable; player **client timeout** is not.
@@ -42,17 +42,37 @@ That gap is **always** true, even when Tomcat is idle. You cannot answer: *How m
 
 `PlayerService.getPlayerById` on `main` catches every exception and returns empty. The controller maps empty to **404**. A real id with a missing `PLAYERS` table looks like “player not found,” not “data store failed.”
 
-### 2.3 A stuck chat call holds a Tomcat worker
+### 2.3 `GET /v1/players` does not scale — availability risk as data grows
 
-On `main`, chat runs on the **request thread** with one **120s** ollama4j timeout. Refused TCP fails fast; a hang peer that already accepted holds the worker until timeout. Enough concurrent chat calls and **player work never gets a thread**. H2 and the JVM can still be fine.
+Today `PlayerService` calls **`findAll()`** and returns every row in one JSON payload (~19k players from `Player.csv` on a laptop). That works for the assignment dataset but **does not stay safe as the table grows toward millions**:
+
+- **Tomcat worker time** — one list call holds a thread for the full DB read, entity mapping, and JSON serialization. Response bytes and GC pressure grow with row count; slow lists compete with `GET /v1/players/{id}` on the same **40**-thread pool.
+- **SLI and client deadlines** — `SliRecordingFilter` treats any `/v1/players` completion below **500** as success. A list that finishes in **90s** with **200** still counts as “available” even when clients already timed out.
+- **Failure blast radius** — under chat saturation (§2.4), a few concurrent “download the whole roster” calls make pool exhaustion more likely; player **by-id** traffic is what the demo must protect.
+
+Pagination is required so list traffic is **bounded per request**, not so every caller pulls the full table.
+
+### 2.4 A stuck chat call holds a Tomcat worker
+
+On `main`, chat runs on the **same Tomcat thread** as player traffic. `ChatController` invokes ollama4j on that thread; **`mvc.async` is off**, so the worker is not released until the generate call completes or throws.
+
+**Hang vs refuse.** Refused TCP (`connection refused` on **11434**) fails in milliseconds. The craft-demo **hang peer** accepts TCP and then never sends a response body. ollama4j keeps reading until **`read-timeout-ms` (120s on baseline)**. That is a **120s worker lease** per stuck chat call, not a database problem—H2 and `GET /v1/players/{id}` can still be fast if a thread is free.
+
+**Pool math (demo pin: 40 threads).** With baseline sync chat, **40 concurrent hung chats saturate the pool**. Request 41 for a player never **starts** servlet handling in time; the client sees **timeout**, while Grafana may still show nothing finished yet. Chat **503** after **2s** on the **`timeouts`** profile is acceptable for this talk; player **client_timeout** is not.
+
+**Coupling with §2.3.** Unbounded or slow list calls are not the same failure mode as a hung LLM read, but both **extend thread hold time**. A full-roster download plus several 120s chats makes it easier to reproduce starvation on a laptop without misattributing the root cause in metrics (busy threads = **40**, player SLI still only counts **completed** responses).
+
+**What “healthy” must not mean.** Process up, H2 up, and an empty Prometheus scrape on **8080** during saturation do **not** imply player work is completing. Observability (§3.1) must show **busy threads** and **finished status codes** while chat is decoupled (§3.4).
 
 ---
 
 ## 3. Approach, challenges, solutions
 
-### Approach
+Each subsection answers one problem from **§2**.
 
-**First:** make the system observable on a path the API pool cannot block. **Second:** compare **baseline** vs **`timeouts`** profile—async chat plus a **2s** Ollama timeout—under the same ramp and hang peer.
+### 3.1 Observability (problem 2.1)
+
+**Approach:** Make the system observable on a path the API pool cannot block, then compare **baseline** vs **`timeouts`** under the same ramp and hang peer.
 
 ```text
 Clients ---------> :8080 (Tomcat, max 40) -----> PlayerController / ChatController
@@ -81,25 +101,78 @@ Two profiles, same hang simulation:
 | **Baseline** | Tomcat thread | 120s | **client_timeout** after pool fills |
 | **Timeouts** | 8× `chat-exec`, queue 0 | 2s | **200**; chat **503** |
 
-### Challenges
+**Challenges**
 
 - **Blind by default:** no stack on `main`; no single place to see player vs chat behavior.
 - **Wrong port for scrape:** 8080 metrics disappear when the pool is saturated.
 - **Missing Tomcat gauge:** without `server.tomcat.mbeanregistry.enabled`, busy-thread metrics are not exported.
 - **Metrics vs user experience:** Grafana counts **completed** responses; hung calls and client timeouts need the ramp log.
 - **Probe design:** Ollama on readiness would drain player traffic during a model outage; liveness on “stuck thread” would restart a JVM that can still serve players.
-- **One timeout knob:** ollama4j uses one request timeout; the hang peer is a long **read** wait, not a connect failure.
 
-### Solutions
+**What we did**
 
-| Area | What we did |
-|------|-------------|
+| Area | Change |
+|------|--------|
 | **Metrics & probes** | `management.server.port: 8081`; expose health, info, prometheus; liveness = process, readiness = **db** only |
 | **Tomcat visibility** | `server.tomcat.mbeanregistry.enabled: true`; Tomcat max **40** for demo saturation |
 | **SLI & stage** | Filter + tracker + `/v1/reliability/mode` and `/sli`; `/actuator/info` documents the split |
 | **Dashboard** | Prometheus + Grafana; busy threads + status counts (no latency panels) |
-| **Correct errors** | DB exceptions → **500** via `PlayerExceptionHandler`; missing id stays **404** |
-| **Availability fix** | `async-enabled` + bounded pool; `read-timeout-ms: 2000` on **`timeouts`** profile |
+
+### 3.2 Correct errors on player reads (problem 2.2)
+
+**Challenge:** Treating every data-layer failure as “not found” hides outages from clients and from the SLI.
+
+**What we did**
+
+- `PlayerService.getPlayerById` lets **`DataAccessException`** propagate (no catch-and-empty).
+- `PlayerExceptionHandler` maps those to **500** `"player data unavailable"`; a genuinely missing id stays **404**.
+
+### 3.3 Pagination for list availability (problem 2.3)
+
+**Challenge:** Unbounded `findAll()` ties list latency, heap use, and JSON size to table cardinality. At millions of rows that is an **availability** problem: one **200** can hold a Tomcat thread long enough that other player clients miss their deadline, even though the SLI still counts the slow call as success.
+
+**Offset vs cursor (keyset)**
+
+| | **Offset** (`page` + `size`) | **Cursor** (keyset, e.g. `after=playerId`) |
+|---|------------------------------|--------------------------------------------|
+| API shape | Familiar; maps to Spring `Pageable` and `LIMIT`/`OFFSET` | Stable when rows are inserted/deleted between pages |
+| Deep pages | Large `OFFSET` gets expensive in SQL | Scales for deep walks when the sort key is indexed |
+| Availability story | **Caps bytes and thread time per call** with a max `size` | Same cap; avoids duplicate/skip under concurrent writes |
+| Fit for this demo | **Implemented** — fixes “whole table in one response” now | Defer until export or live-catalog churn needs it |
+
+**Choice:** **Offset pagination** first. The win for player availability is bounding **each** list response, not optimizing page 20,000. Cursor/keyset stays a later option when deep sequential scans or high churn matter more than time-to-ship.
+
+**What we did**
+
+| Piece | Behavior |
+|-------|----------|
+| **API** | `GET /v1/players?page=&size=&sort=` — Spring `Pageable`; default **size=50**, sort **`playerId`**. |
+| **Cap** | `size` > **100** → **400** `{"error":"size must not exceed 100"}`. |
+| **Persistence** | `playerRepository.findAll(pageable)` — no unbounded list in `PlayerService`. |
+| **JSON** | Existing `players` array plus **`page`**, **`size`**, **`totalElements`**, **`totalPages`** on `Players`. |
+
+**Try it**
+
+```shell
+curl -s 'http://localhost:8080/v1/players?page=0&size=10'
+curl -s 'http://localhost:8080/v1/players?page=1&size=10&sort=playerId,asc'
+```
+
+Clients walk pages until `page + 1 >= totalPages`. The ~19k-row demo CSV becomes many small responses instead of one multi‑MB payload.
+
+### 3.4 Chat decoupling under pool pressure (problem 2.4)
+
+**Challenge:** Baseline chat blocks the Tomcat worker for the full ollama4j read (up to **120s**). The hang peer is a **read stall**, not a connect failure, so failure looks like “slow” or “client gave up,” not an immediate **503**.
+
+**What we did**
+
+| Area | Change |
+|------|--------|
+| **Availability fix** | `async-enabled` + bounded **`chat-exec`** pool (queue **0**); `read-timeout-ms: 2000` on **`timeouts`** profile |
+| **Controller** | Return **`Callable`** when async so Tomcat releases the request thread; **503** on timeout, connect failure, or **pool full** |
+| **Config** | `OllamaAPI.setRequestTimeoutSeconds` aligned with `app.chat.read-timeout-ms`; stage in `/v1/reliability/mode` and `/actuator/info` |
+
+Under **`timeouts`**, chat fails fast (**503**) while the ramp shows player **200** with peak busy threads near idle—see **Test** below. That is the paired fix with §3.3: shorter per-request work on **both** list and chat paths where we control them.
 
 ### Key files (what changed)
 
@@ -117,14 +190,17 @@ Two profiles, same hang simulation:
 | `craft-demo/observability/grafana/dashboards/availability.json` | Busy threads + per-API status counts |
 | `scripts/ramp_load_test.py` | Hang peer + ramp; writes `ramp-baseline.json`, `ramp-timeouts.json` |
 
-**Player correctness**
+**Player correctness & list bounds (§3.2, §3.3)**
 
 | File | Role |
 |------|------|
-| `src/main/java/.../service/PlayerService.java` | Propagate DB errors; keep 0–2s latency simulation |
+| `src/main/java/.../model/Players.java` | List payload + offset metadata (`page`, `size`, `totals`) |
+| `src/main/java/.../service/PlayerService.java` | `getPlayers(Pageable)`; propagate DB errors; 0–2s latency on by-id only |
+| `src/main/java/.../controller/PlayerController.java` | `PageableDefault(50)`; **400** when `size` > 100 |
+| `src/main/java/.../repository/PlayerRepository.java` | `JpaRepository` `findAll(Pageable)` |
 | `src/main/java/.../controller/PlayerExceptionHandler.java` | Map `DataAccessException` → **500** |
 
-**Chat / availability (baseline vs timeouts)**
+**Chat / availability (§3.4 — baseline vs timeouts)**
 
 | File | Role |
 |------|------|
@@ -154,6 +230,7 @@ Same ramp for both profiles (hang on **11434**, traffic stepped every 5s). Check
 - **Observability:** You can see saturation and completed status codes while the failure is happening, and separate “client gave up” from “app returned 503.”
 - **Player API:** Under the same hung model, player calls stay **200** instead of timing out at the client—on **one JVM**, with monitoring that still scrapes.
 - **Operability:** DB outage is **500**, not a fake 404. Readiness stays **UP** when only Ollama is down, so this instance can keep taking player traffic.
+- **List traffic:** Offset pagination keeps each list call bounded so roster growth does not turn `GET /v1/players` into a multi‑minute Tomcat hog; by-id and paged list can coexist in the same pool.
 
 Fleet effects (replicas, second JVM) are in **section 6**.
 
@@ -165,6 +242,7 @@ Fleet effects (replicas, second JVM) are in **section 6**.
 - **Observability is a product feature:** metrics port, MBean registry, SLI, and dashboards are part of the fix—not only something you add after an incident.
 - **Busy threads** = capacity; **status counts** = completed outcomes; **ramp outcomes** = what the user felt when nothing finished.
 - **More Tomcat threads** do not fix a 120s chat call on the request thread; **decouple + shorter timeout** does.
+- **Unbounded `findAll()`** is a player-availability bug at scale; **offset pages + max `size`** fix the common case before you need cursor/keyset paging.
 - **Probes and replicas** are the next step: readiness routes traffic; a second JVM shows why that matters. Splitting player and chat deployments is the same isolation at larger scale.
 
 ---
