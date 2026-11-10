@@ -1,6 +1,8 @@
 # Commands
 
-Copy-paste for the talk and the night-before rebuild. The plan is [`presenter-45min.md`](presenter-45min.md). Do not run the ramp or `DROP TABLE` live unless you have rehearsed the restart.
+Copy-paste for the talk and the night-before rebuild. Slide numbers are [`Player-Service-Availability_v3.pptx`](file:///Users/jidongchai/Downloads/Player-Service-Availability_v3.pptx) (21 slides). Slides 1–10 are pitch only. Live curls start at slide 11. Do not run the ramp or `DROP TABLE` live unless you have rehearsed the restart.
+
+The bar (slide 8): a player call is available when it returns **200**, **400**, or **404** before the client gives up. A client timeout is a miss. Chat **503** is fine.
 
 ```bash
 export JAVA_HOME="/opt/homebrew/opt/openjdk@17"
@@ -53,7 +55,21 @@ curl -si localhost:8080/v1/players/no-such-player | head -n 1
 
 ## Talk order
 
-### 3.2 — 404 vs 500
+### Slide 11 — 3.1 observability
+
+8081 is a second Tomcat. Readiness is the database, not Ollama. `client_timeout` is only in the ramp JSON.
+
+```bash
+curl -s localhost:8081/actuator/health/liveness | python3 -m json.tool
+curl -s localhost:8081/actuator/health/readiness | python3 -m json.tool
+curl -s localhost:8081/actuator/prometheus | grep -E 'tomcat_threads_busy_threads|tomcat_threads_config_max_threads'
+curl -s localhost:8080/v1/reliability/mode | python3 -m json.tool
+curl -s -X POST localhost:8080/v1/reliability/sli/reset >/dev/null
+curl -s -o /dev/null localhost:8080/v1/players/aardsda01
+curl -s localhost:8080/v1/reliability/sli | python3 -m json.tool
+```
+
+### Slide 12 — 3.2, 404 vs 500
 
 Unknown id stays 404:
 
@@ -81,7 +97,7 @@ curl -s -o /dev/null \
 curl -si localhost:8080/v1/players/aardsda01 | head -n 20
 ```
 
-### 3.3 — pagination
+### Slides 13–15 — 3.3 pagination
 
 ```bash
 curl -s 'localhost:8080/v1/players?page=0&size=10' | python3 -c 'import sys,json; d=json.load(sys.stdin); print({k:d[k] for k in ("page","size","totalElements","totalPages")}, "rows", len(d["players"]))'
@@ -90,7 +106,9 @@ curl -s -o /dev/null -w "size10 %{http_code} %{size_download}B %{time_total}s\n"
 curl -si 'localhost:8080/v1/players?size=101' | head -n 1
 ```
 
-Same load on the unbounded jar and the paged jar (both `-Xmx128m`). Not a live step.
+Slide 14 expects size=10 → **10** rows, `totalElements` **19370**, **4,691** bytes; the default page is **23,332** bytes against a **~9 MB** full roster; `size=101` is **400**.
+
+Slide 15 is the same 30 calls, both jars `-Xmx128m`. Not a live step. Main: **10×500**, **19×200**, **1** incomplete. Branch: **30×200**, **0×5xx**.
 
 ```bash
 sh scripts/build_demo_main_jar.sh
@@ -98,19 +116,7 @@ sh scripts/start_dual_jars.sh
 python3 scripts/pagination_load_compare.py
 ```
 
-### 3.1 — observability
-
-```bash
-curl -s localhost:8081/actuator/health/liveness | python3 -m json.tool
-curl -s localhost:8081/actuator/health/readiness | python3 -m json.tool
-curl -s localhost:8081/actuator/prometheus | grep -E 'tomcat_threads_busy_threads|tomcat_threads_config_max_threads'
-curl -s localhost:8080/v1/reliability/mode | python3 -m json.tool
-curl -s -X POST localhost:8080/v1/reliability/sli/reset >/dev/null
-curl -s -o /dev/null localhost:8080/v1/players/aardsda01
-curl -s localhost:8080/v1/reliability/sli | python3 -m json.tool
-```
-
-### 3.4 — chat
+### Slide 16 — 3.4 chat
 
 Refused TCP fails fast. The ramp uses a hang peer instead (accepts, never replies).
 
@@ -121,7 +127,19 @@ curl -s -o /dev/null -w "player %{http_code}\n" localhost:8080/v1/players/aardsd
 docker start ollama
 ```
 
-On the `timeouts` profile the same chat call returns **503** in about 2s while the player call stays **200**. Readiness stays **UP** with Ollama down, because readiness is the database only.
+On the `timeouts` profile the same chat call returns **503** in about 2s while the player call stays **200**. Readiness stays **UP** with Ollama down, because readiness is the database only. Skip `docker stop` unless that profile is already the running process.
+
+### Slides 17–18 — proof, read only
+
+Do not run the ramp in the room. Slide 17, same hang peer on **11434**:
+
+| | Baseline | timeouts |
+|--|----------|----------|
+| `GET /v1/players` | 6×200, 22×client timeout | 28×200 |
+| `GET /v1/players/{id}` | 6×200, 22×client timeout | 28×200 |
+| Player totals | 12×200, 44×client timeout of 56 | 56×200, 0 client timeouts |
+| Chat | client timeout, no HTTP status | 84×503 per route, about 2s |
+| Tomcat busy, peak | 40/40 | 2/40 |
 
 ---
 
@@ -135,7 +153,7 @@ python3 scripts/ramp_load_test.py timeouts
 python3 scripts/render_ramp_scorecard.py
 ```
 
-Checked-in result: player routes **6×200 + 22×client_timeout** → **28×200**; Tomcat busy **40** → **2**.
+Checked-in result matches slide 17: each player route **6×200 + 22×client_timeout** → **28×200**; player totals **12×200 + 44×client_timeout** of 56 → **56×200**; chat **84×503** per route; Tomcat busy **40/40** → **2/40**.
 
 ---
 
@@ -146,13 +164,13 @@ python3 scripts/build_google_slides.py
 sh scripts/capture_grafana_screenshots.sh
 ```
 
-Import `craft-demo/Player-Service-Availability.pptx` into Google Slides.
+That script writes `craft-demo/Player-Service-Availability.pptx`. The talk deck is the v3 file in Downloads, not that generated pptx.
 
 `sh scripts/demo_capture.sh` rewrites curl evidence and **drops `PLAYERS`**. Restart the app after it.
 
 ---
 
-## Optional, if asked
+## Optional, if asked (slide 21)
 
 Second JVM. Terminal 1 stays on **8080**. Terminal 2:
 
